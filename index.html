@@ -255,6 +255,8 @@ button,input,select{font:inherit;color:inherit;}
 #dtRow{align-items:start;gap:10px;}
 #dtRow .sub-label{margin-top:0;}
 #segCutoff button{padding:8px 2px;font-size:13px;}
+.cal .d .lbl{font-size:10px;font-weight:600;line-height:1.1;margin-top:2px;opacity:.95;white-space:nowrap;}
+.cal .d.mk{height:auto;min-height:46px;}
 </style>
 </head>
 <body>
@@ -632,14 +634,23 @@ function stepList(r){
   if(!sw){
     steps.push({n:3,what:'Settlement Date (เงินเข้าบัญชี)',when:fmtMid(r.settle),sub:`เข้า${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}`});
   }else{
-    steps.push({n:3,what:`Settlement Date (${src})`,when:fmtMid(r.settle),sub:`เงินเข้าบัญชี -2`});
+    steps.push({n:3,what:`Settlement Date (${src})`,when:fmtMid(r.settle),sub:`เงินเข้าบัญชี -2 โมเดลปลายทาง`});
     steps.push({n:4,what:`ลงทุนในโมเดล ${D}`,when:fmtMid(r.invest),
       note:r.intlFunds?`<b>มี ${r.intlFunds.length||'บาง'} กองทุนติดวันหยุด<i class="info" data-tip="กองทุนในโมเดล ${D} ที่ติดวันหยุด ${fmtShort(r.invest)}|${r.intlFunds.join(', ')}|plain">i</i></b>ระบบจะจัดสรรเงินลงทุนในกองทุนที่ไม่ติดวันหยุดก่อน ส่วนกองทุนที่ติดวันหยุดจะลงทุนในวันทำการถัดไป`:''});
   }
   return steps;
 }
+// ไอคอนแทนเลขใน timeline (เลข 1-5 ใช้เฉพาะขั้นตอนฝั่งฟอร์ม จะได้ไม่สับสน)
+const STEP_ICON={
+  1:'<path d="M22 2 11 13"/><path d="M22 2 15 22 11 13 2 9z"/>',
+  2:'<path d="m7 4-4 4 4 4"/><path d="M3 8h14"/><path d="m17 20 4-4-4-4"/><path d="M21 16H7"/>',
+  3:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/>',
+  4:'<path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/>'
+};
+const CAL_LABEL={1:'ส่ง IC',2:'T',3:'เงินเข้า',4:'ลงทุน'};
+const icon=n=>`<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${STEP_ICON[n]}</svg>`;
 function stepsHtml(r){
-  return '<ol class="tl">'+stepList(r).map(s=>`<li class="st${s.n}" data-step="${s.n}" tabindex="0"><span class="num">${s.n}</span><div class="what">${s.what}</div><div class="when">${s.when}</div>${s.sub?`<div class="sub">${s.sub}</div>`:''}${s.note?`<div class="tl-note">${s.note}</div>`:''}</li>`).join('')+'</ol>';
+  return '<ol class="tl">'+stepList(r).map(s=>`<li class="st${s.n}" data-step="${s.n}" tabindex="0"><span class="num">${icon(s.n)}</span><div class="what">${s.what}</div><div class="when">${s.when}</div>${s.sub?`<div class="sub">${s.sub}</div>`:''}${s.note?`<div class="tl-note">${s.note}</div>`:''}</li>`).join('')+'</ol>';
 }
 
 function notesHtml(r){
@@ -668,7 +679,6 @@ function calendarHtml(r){
   let h=`<div class="cal-area"><div class="cal-head"><h3>${title}</h3><div class="key">
     <span><i class="sw th"></i>วันหยุดสถาบันการเงินไทย</span>
     <span><i class="sw intl"></i>วันหยุดกองทุนในโมเดล ${dn(S.model)}</span>
-    <span><i class="sw wk"></i>เสาร์-อาทิตย์</span>
     <span class="tip-hint">ชี้หรือแตะวันหยุดเพื่อดูรายละเอียด</span>
   </div></div><div class="cal"><div class="g">`+['อา','จ','อ','พ','พฤ','ศ','ส'].map(x=>`<div class="dow">${x}</div>`).join('');
   for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
@@ -678,7 +688,7 @@ function calendarHtml(r){
     else if(thai.has(ds)){c+=' th';tip='วันหยุดสถาบันการเงินไทย|';}
     else if(intl.has(ds)){c+=' intl';tip=`วันหยุดกองทุนในโมเดล ${dn(S.model)}|${(fm[ds]||[]).join(', ')}`;}
     const n=marks[ds];
-    if(n){c+=` mk st${n}`;st=` data-step="${n}"`;badge=`<span class="badge">${n}</span>`;}
+    if(n){c+=` mk st${n}`;st=` data-step="${n}"`;badge='';}
     else if(ds===boldDay)c+=' bold';
     h+=`<div class="${c}"${st}${tip?` data-tip="${tip}"`:''}>${showMo?`<span class="mo">${TH_MO[d.getMonth()]}</span>`:''}${d.getDate()}${badge}</div>`;
   }
