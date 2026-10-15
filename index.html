@@ -622,7 +622,7 @@ function answerHtml(r){
   const B='<button type="button" class="btn" id="saveBtn">บันทึกเป็นรูป</button>';
   if(r.mode==='forward')return `<div class="answer"><div><p class="lead">${U}ลูกค้าจะได้รับเงินเข้าบัญชี${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}</p><p class="big">${fmtThai(r.settle)}</p></div>${B}</div>`;
   if(r.mode==='wealth')return `<div class="answer"><div><p class="lead">${U}เงินจะเข้าลงทุนในโมเดล ${D}</p><p class="big">${fmtThai(r.invest)}</p></div>${B}</div>`;
-  return `<div class="answer"><div><p class="lead"><u>แนะนำ</u></p><p class="big">${fmtThai(r.ic)} <small>ก่อน 15:00</small></p><p class="alt">หรือ ${fmtThai(r.icAfter)} หลัง 15:00</p></div>${B}</div>`;
+  return `<div class="answer"><div><p class="lead"><u>แนะนำ</u>ให้ส่ง IC Request</p><p class="big">${fmtThai(r.ic)} <small>ก่อน 15:00</small></p><p class="alt">หรือ ${fmtThai(r.icAfter)} หลัง 15:00</p></div>${B}</div>`;
 }
 
 function stepList(r){
