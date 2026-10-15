@@ -13,9 +13,9 @@
   --paper:#EEF2F7; --surface:#FFFFFF; --line:#DCE2EA; --soft:#F6F8FB;
   --brand:#1B3A8C;
   --s1:#A14D0C; --s1-bg:#FBEBDD;   /* ส่ง IC Request */
-  --s2:#2457D6; --s2-bg:#E3EBFC;   /* Transaction */
+  --s2:#0E7C86; --s2-bg:#DDF1F2;   /* Transaction */
   --s3:#13804A; --s3-bg:#DDF3E6;   /* Settlement */
-  --s4:#6D3FD0; --s4-bg:#ECE5FB;   /* ลงทุนปลายทาง */
+  --s4:#1B3A8C; --s4-bg:#E2E8F6;   /* ลงทุนปลายทาง (น้ำเงินเข้ม = สีปุ่มโมเดลปลายทาง) */
   --th:#B42318; --th-bg:#FDE2E0;
   --intl:#8A5A00; --intl-bg:#FBEBC0;
   --warn:#B42318;
@@ -24,7 +24,7 @@
 [hidden]{display:none !important;}
 body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 'IBM Plex Sans Thai','Segoe UI',Tahoma,sans-serif;font-variant-numeric:tabular-nums;}
 button,input,select{font:inherit;color:inherit;}
-:focus-visible{outline:2px solid var(--s2);outline-offset:2px;}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;}
 @media (prefers-reduced-motion:reduce){*{transition:none !important;}}
 
 /* ── Header & tabs ── */
@@ -37,8 +37,10 @@ button,input,select{font:inherit;color:inherit;}
 .data-pill b{display:block;color:var(--ink);font-weight:600;}
 .data-pill i{width:8px;height:8px;border-radius:50%;background:var(--s3);flex-shrink:0;margin-top:6px;}
 .data-pill.fallback i{background:#D08700;}
-.tabs{display:flex;gap:4px;margin-top:18px;border-bottom:1px solid var(--line);}
-.tabs button{border:0;background:none;padding:10px 16px;font-size:15px;font-weight:600;color:var(--ink-3);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;}
+.tabs{display:flex;gap:4px;margin-top:18px;border-bottom:1px solid var(--line);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tabs button{white-space:nowrap;}
+.tabs button{border:0;background:none;padding:10px 16px;font-size:15px;font-weight:600;color:var(--ink-3);cursor:pointer;border-bottom:3px solid transparent;}
 .tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brand);}
 .tabs button:hover{color:var(--ink);}
 @media(max-width:700px){.top{padding:18px 16px 0;}.top h1{font-size:21px;}}
@@ -86,7 +88,7 @@ button,input,select{font:inherit;color:inherit;}
 .blk{padding-top:18px;}
 .blk + .blk{border-top:1px solid var(--line);margin-top:18px;}
 .blk-title{display:flex;align-items:center;gap:9px;font-size:14.5px;font-weight:600;margin:0 0 10px;}
-.blk-title::before{counter-increment:step;content:counter(step);width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.blk-title::before{content:attr(data-n);width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
 .sub-label{display:block;font-size:13px;font-weight:500;color:var(--ink-2);margin:10px 0 6px;}
 .sub-label:first-of-type{margin-top:0;}
 
@@ -109,7 +111,7 @@ button,input,select{font:inherit;color:inherit;}
 .chips button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 2px;font-size:12.5px;font-weight:600;cursor:pointer;}
 .chips button:hover{border-color:var(--ink-3);}
 .chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;}
-.chips.dest button[aria-pressed="true"]{background:var(--s2);border-color:var(--s2);}
+.chips.dest button[aria-pressed="true"]{background:var(--s4);border-color:var(--s4);}
 
 .date-in{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:15px;}
 .hint{font-size:12.5px;color:var(--ink-3);margin-top:6px;}
@@ -124,17 +126,25 @@ button,input,select{font:inherit;color:inherit;}
 .answer .alt{font-size:17px;color:var(--ink-2);margin:4px 0 0;font-weight:500;}
 @media(max-width:600px){.answer{padding:20px;}.answer .big{font-size:25px;}}
 
-/* stepper: เลขขั้นตอนเดียวกับที่แสดงในปฏิทิน */
-.stepper{list-style:none;margin:0;padding:22px 28px 4px;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px;}
-@media(max-width:760px){.stepper{grid-auto-flow:row;padding:18px 20px 0;gap:12px;}}
-.stepper li{position:relative;padding:12px 14px;border-radius:12px;background:var(--bg);border:1px solid transparent;cursor:default;transition:border-color .15s;}
-.stepper li:hover,.stepper li:focus-within{border-color:var(--c);}
-.stepper .num{width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;}
-.stepper .what{font-size:13px;font-weight:600;color:var(--c);margin-top:6px;line-height:1.35;}
-.stepper .when{font-size:15.5px;font-weight:600;line-height:1.4;margin-top:2px;}
-.stepper .when .or{display:block;font-weight:500;font-size:13.5px;color:var(--ink-2);}
-.stepper .why{font-size:12px;color:var(--ink-2);margin-top:4px;line-height:1.45;}
-.st1{--c:var(--s1);--bg:var(--s1-bg);} .st2{--c:var(--s2);--bg:var(--s2-bg);} .st3{--c:var(--s3);--bg:var(--s3-bg);} .st4{--c:var(--s4);--bg:var(--s4-bg);}
+/* timeline: เลขในจุดตรงกับเลขในปฏิทิน */
+.tl{list-style:none;margin:0;padding:24px 28px 6px;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;}
+.tl li{position:relative;padding:0 14px 0 0;}
+.tl li:not(:last-child)::after{content:"";position:absolute;top:13px;left:34px;right:6px;height:2px;background:var(--line);}
+.tl .num{position:relative;z-index:1;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px var(--surface);}
+.tl .what{font-size:13px;font-weight:600;color:var(--c);margin-top:10px;line-height:1.35;}
+.tl .when{font-size:15.5px;font-weight:600;line-height:1.4;margin-top:2px;}
+.tl .sub{font-size:13px;color:var(--ink-2);line-height:1.45;margin-top:1px;}
+.tl .tl-note{font-size:12.5px;line-height:1.5;color:var(--intl);background:var(--intl-bg);border-radius:8px;padding:6px 9px;margin-top:8px;}
+.tl li.hl .num{box-shadow:0 0 0 4px var(--surface),0 0 0 6px var(--c);}
+@media(max-width:760px){
+  .tl{grid-auto-flow:row;padding:20px 20px 4px;gap:0;}
+  .tl li{padding:0 0 18px 42px;}
+  .tl li:last-child{padding-bottom:6px;}
+  .tl .num{position:absolute;left:0;top:0;}
+  .tl li:not(:last-child)::after{top:30px;bottom:0;left:13px;right:auto;width:2px;height:auto;}
+  .tl .what{margin-top:2px;}
+}
+.st1{--c:var(--s1);} .st2{--c:var(--s2);} .st3{--c:var(--s3);} .st4{--c:var(--s4);}
 
 .notes{display:flex;flex-direction:column;gap:8px;padding:14px 28px 0;}
 @media(max-width:760px){.notes{padding:14px 20px 0;}}
@@ -142,33 +152,36 @@ button,input,select{font:inherit;color:inherit;}
 .note.red{background:var(--th-bg);color:var(--th);}
 .note.amb{background:var(--intl-bg);color:var(--intl);}
 
-/* calendar */
-.cal-area{padding:22px 28px 24px;}
-@media(max-width:760px){.cal-area{padding:18px 20px 20px;}}
-.key{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:var(--ink-2);margin-bottom:12px;align-items:center;}
-.key span{display:inline-flex;align-items:center;gap:7px;}
-.sw{width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;}
-.sw.th{background:var(--th-bg);color:var(--th);}
-.sw.intl{background:repeating-linear-gradient(135deg,var(--intl-bg) 0 4px,#F6DE9A 4px 8px);color:var(--intl);}
-.sw.wk{color:#A9B3C4;border:1px dashed var(--line);}
-.sw.path{background:var(--soft);box-shadow:inset 0 0 0 1px var(--line);}
-.cals{display:flex;gap:18px;flex-wrap:wrap;}
-.cal{flex:1 1 0;min-width:230px;max-width:380px;}
-.cal h3{margin:0 0 6px;font-size:14.5px;font-weight:600;}
-.cal .g{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:13px;}
+/* calendar: ปฏิทินต่อเนื่องเฉพาะสัปดาห์ที่เกี่ยวข้อง */
+.cal-area{padding:20px 28px 24px;}
+@media(max-width:760px){.cal-area{padding:16px 20px 20px;}}
+.cal-head{display:flex;justify-content:space-between;align-items:flex-end;gap:8px 20px;flex-wrap:wrap;margin-bottom:10px;}
+.cal-head h3{margin:0;font-size:15px;font-weight:600;}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);align-items:center;}
+.key span{display:inline-flex;align-items:center;gap:6px;}
+.sw{width:16px;height:16px;border-radius:4px;display:inline-block;}
+.sw.th{background:var(--th-bg);box-shadow:inset 0 0 0 1px #F3B8B2;}
+.sw.intl{background:repeating-linear-gradient(135deg,var(--intl-bg) 0 3px,#F2D27F 3px 6px);}
+.sw.wk{border:1px dashed #C3CBD8;}
+.key .tip-hint{color:var(--ink-3);}
+.cal{max-width:640px;}
+.cal .g{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:13.5px;}
 .cal .dow{text-align:center;color:var(--ink-3);font-size:11.5px;padding-bottom:2px;}
-.cal .d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;position:relative;color:var(--ink);}
-.cal .d.path{background:var(--soft);box-shadow:inset 0 0 0 1px var(--line);}
-.cal .d.wk{color:#A9B3C4;background:transparent;box-shadow:none;}
-.cal .d.th{background:var(--th-bg);color:var(--th);font-weight:600;box-shadow:none;}
-.cal .d.intl{background:repeating-linear-gradient(135deg,var(--intl-bg) 0 4px,#F6DE9A 4px 8px);color:var(--intl);font-weight:600;cursor:help;box-shadow:none;}
-.cal .d.mk{background:var(--c);color:#fff;font-weight:700;box-shadow:none;}
-.cal .d.mk.ghost{background:var(--surface);color:var(--c);box-shadow:inset 0 0 0 2px var(--c);}
+.cal .d{height:46px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:8px;position:relative;color:var(--ink);line-height:1.1;}
+.cal .d .mo{font-size:10px;font-weight:600;color:var(--ink-3);}
+.cal .d.wk{color:#A9B3C4;background:transparent;}
+.cal .d.th{background:var(--th-bg);color:var(--th);font-weight:600;cursor:pointer;}
+.cal .d.intl{background:repeating-linear-gradient(135deg,var(--intl-bg) 0 4px,#F6DE9A 4px 8px);color:var(--intl);font-weight:600;cursor:pointer;}
+.cal .d.mk{background:var(--c);color:#fff;font-weight:700;}
+.cal .d.mk .mo{color:rgba(255,255,255,.8);}
+.cal .d.bold{font-weight:800;color:var(--s1);}
 .cal .d .badge{position:absolute;top:-6px;right:-6px;width:17px;height:17px;border-radius:50%;background:var(--surface);color:var(--c);box-shadow:0 0 0 2px var(--c);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;}
 .cal .d.focus{outline:3px solid var(--c);outline-offset:2px;}
+.tip{position:absolute;z-index:20;max-width:260px;background:var(--ink);color:#fff;font-size:12.5px;line-height:1.5;padding:8px 10px;border-radius:8px;box-shadow:0 6px 18px rgba(20,33,61,.25);pointer-events:none;}
+.tip b{display:block;font-weight:600;}
 
 .actions{display:flex;gap:10px;padding:16px 28px 20px;flex-wrap:wrap;border-top:1px solid var(--line);}
-@media(max-width:760px){.actions{padding:0 20px 20px;}}
+@media(max-width:760px){.actions{padding:14px 20px 18px;}}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;font-size:14px;font-weight:500;cursor:pointer;}
 .btn:hover{border-color:var(--ink-3);}
 
@@ -179,63 +192,167 @@ button,input,select{font:inherit;color:inherit;}
 
 .empty{padding:56px 28px;text-align:center;color:var(--ink-2);}
 .empty strong{display:block;color:var(--ink);font-size:18px;margin-bottom:4px;}
+
+/* ════ Compact: ให้หน้าคำนวณอยู่ในจอเดียว ════ */
+.titleline{display:flex;align-items:baseline;gap:4px 12px;flex-wrap:wrap;}
+.titleline .team{margin:0;}
+.subline{display:flex;gap:2px 14px;flex-wrap:wrap;align-items:center;margin-top:1px;}
+.opts.row{flex-direction:row;}
+.lrow{display:grid;grid-template-columns:74px 1fr;align-items:center;gap:8px;}
+.lrow + .lrow{margin-top:6px;}
+.lrow .sub-label{margin:0;}
+
+.opts.row .opt{flex:1;padding:7px 9px;gap:7px;}
+.opts.row .opt b{font-size:13.5px;}
+.opts.row .opt small{font-size:11.5px;line-height:1.35;}
+.opts.row .rd{width:15px;height:15px;}
+
+.top{padding:14px 24px 0;}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px 24px;flex-wrap:wrap;}
+.top h1{font-size:21px;margin:0;}
+.top .sub{font-size:13px;margin:0;}
+.data-line{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);margin:2px 0 0;}
+.data-line i{width:7px;height:7px;border-radius:50%;background:var(--s3);flex-shrink:0;}
+.data-line.fallback i{background:#D08700;}
+.data-line b{color:var(--ink-2);font-weight:600;}
+.tabs{margin-top:0;border-bottom:0;}
+.tabs button{padding:8px 14px;font-size:14.5px;}
+.top-rule{height:1px;background:var(--line);margin-top:0;}
+.page{padding:14px 24px 20px;}
+.calc{grid-template-columns:330px 1fr;gap:18px;}
+.rail{padding:2px 18px 16px;top:10px;}
+.blk{padding-top:10px;}
+.blk + .blk{margin-top:10px;}
+.blk-title{margin:0 0 8px;font-size:14px;}
+.seg button{padding:6px 6px;font-size:13.5px;}
+.opts{gap:6px;}
+.opt{padding:7px 10px;}
+.opt b{font-size:14px;}
+.chips button{padding:5px 2px;}
+.chips button:disabled{background:var(--soft);color:#B7C0CF;border-style:dashed;cursor:not-allowed;}
+.sub-label{margin:6px 0 4px;}
+.dt{display:grid;grid-template-columns:1.25fr 1fr;gap:10px;align-items:start;}
+.dt.one{grid-template-columns:1fr;}
+.date-in{padding:7px 10px;font-size:14.5px;}
+.hint{font-size:12px;}
+
+.answer{padding:12px 22px 10px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.answer .big{font-size:26px;}
+.answer .big small{font-size:17px;}
+.answer .alt{font-size:15px;margin-top:0;}
+.answer .btn{flex-shrink:0;padding:7px 14px;font-size:13.5px;}
+.notes{padding:10px 22px 0;}
+.note{padding:7px 11px;font-size:13px;}
+.res-body{display:grid;grid-template-columns:270px 1fr;gap:22px;padding:14px 22px 14px;align-items:start;}
+@media(max-width:1100px){.res-body{grid-template-columns:1fr;}}
+
+/* timeline แนวตั้ง */
+.tl{display:block;padding:0;}
+.tl li{padding:0 0 10px 40px;}
+.tl li:last-child{padding-bottom:0;}
+.tl .num{position:absolute;left:0;top:0;width:26px;height:26px;font-size:13px;}
+.tl li:not(:last-child)::after{top:28px;bottom:2px;left:12px;right:auto;width:2px;height:auto;}
+.tl .what{margin-top:1px;font-size:12.5px;}
+.tl .when{font-size:15px;}
+.tl .sub{font-size:12.5px;}
+.tl .tl-note{font-size:12.5px;padding:7px 9px;margin-top:6px;}
+.tl .tl-note b{display:block;font-weight:600;}
+.info{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--intl);color:#fff;font-size:10.5px;font-weight:700;font-style:normal;margin-left:4px;cursor:pointer;vertical-align:1px;}
+
+.cal-area{padding:0;}
+.cal-head{margin-bottom:8px;}
+.cal-head h3{font-size:14px;}
+.key{font-size:12px;gap:4px 12px;}
+.cal .d{height:35px;font-size:13px;}
+.cal .g{gap:3px;}
+
+.foot{padding:10px 22px 12px;font-size:12px;line-height:1.5;}
+.foot ul{margin:2px 0 0;}
+@media(min-width:1100px){.foot ul{columns:2;column-gap:28px;}.foot li{break-inside:avoid;}}
+@media(max-width:760px){.answer{padding:16px 18px;flex-direction:column;}.res-body{padding:14px 18px;}.foot{padding:12px 18px;}.top{padding:14px 16px 0;}.page{padding:12px 16px 24px;}}
+/* final tightening */
+.top{padding-top:10px;}
+.tabs button{padding:6px 14px;}
+.page{padding-top:10px;}
+.blk-title{margin-bottom:6px;}
+.seg{padding:2px;}
+.seg button{padding:5px 6px;}
+.chips{gap:5px;}
+.chips button{padding:4px 2px;}
+.rail{padding-bottom:12px;}
+.date-in{padding:5px 10px;}
+.blk{padding-top:9px;}
+.blk + .blk{margin-top:9px;}
+.opts.row .opt{padding:6px 8px;}
+.sub-label{margin:4px 0 3px;}
+.calc{grid-template-columns:372px 1fr;}
+.seg button{white-space:nowrap;font-size:13px;padding:5px 4px;}
+.lrow{grid-template-columns:62px 1fr;}
+.dt{grid-template-columns:1fr 1fr;}
+.opts.row .opt b{font-size:13px;}
+.cal .d{height:32px;}
+.cal-head{flex-direction:column;align-items:flex-start;gap:4px;}
+.key{font-size:11.5px;gap:2px 10px;}
+.foot{font-size:11.5px;padding:8px 22px 10px;line-height:1.45;}
+.answer .alt{font-size:14px;}
+.tl .tl-note{line-height:1.45;}
+@media(max-width:950px){.calc{grid-template-columns:1fr;}.res-body{grid-template-columns:1fr;}}
+@media(max-width:420px){.seg button{font-size:12.5px;}.opts.row{flex-direction:column;}}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <p class="team">BLS Mutual Fund</p>
-  <div class="title-row">
+  <div class="head">
     <div>
-      <h1>Auto Top Funds: Settlement Date Calculator</h1>
-      <p class="sub">เครื่องมือคำนวณวันรับเงิน วันส่งคำสั่ง และวันลงทุนโมเดลปลายทาง</p>
+      <div class="titleline"><h1>Auto Top Funds: Settlement Date Calculator</h1><p class="team">BLS Mutual Fund</p></div>
+      <div class="subline"><p class="sub">เครื่องมือคำนวณวันรับเงิน วันส่งคำสั่ง และวันลงทุนโมเดลปลายทาง</p>
+      <p class="data-line" id="dataPill" style="margin:0;"><i></i><span id="dataText">กำลังโหลดข้อมูล</span></p></div>
     </div>
-    <div class="data-pill" id="dataPill"><i></i><span id="dataText">กำลังโหลดข้อมูล</span></div>
-  </div>
   <nav class="tabs" role="tablist">
-    <button type="button" role="tab" id="tabOv" aria-selected="true" aria-controls="pageOv">ภาพรวมโมเดลและวันหยุด</button>
-    <button type="button" role="tab" id="tabCalc" aria-selected="false" aria-controls="pageCalc">คำนวณวัน</button>
+    <button type="button" role="tab" id="tabCalc" aria-selected="true" aria-controls="pageCalc">คำนวณวัน</button>
+    <button type="button" role="tab" id="tabOv" aria-selected="false" aria-controls="pageOv">ตาราง Settlement Date และวันหยุด</button>
   </nav>
+  </div>
+  <div class="top-rule"></div>
 </header>
 
 <!-- ═════════ แท็บ 1: ภาพรวม ═════════ -->
-<main class="page" id="pageOv" role="tabpanel">
+<main class="page" id="pageOv" role="tabpanel" hidden>
   <div class="ov">
     <section class="card">
       <h2>Settlement Date ของแต่ละโมเดล</h2>
       <p class="desc">นับจาก Transaction Date (T) เป็นวันทำการ</p>
       <div class="tbl-wrap" id="ovTn"></div>
-      <p class="foot-hint">Transaction Date = วันส่ง IC Request +1 วันทำการ (ส่งก่อน 15:00) หรือ +2 วันทำการ (ส่งหลัง 15:00)</p>
+      <p class="foot-hint">Transaction Date (T) คือวันที่ระบบส่งคำสั่งขาย โดยต้องส่ง IC Request ล่วงหน้า 1 วันทำการ ก่อน 15:00 น. (ถ้าส่งหลัง 15:00 น. จะเป็น 2 วันทำการ)</p>
     </section>
     <section class="card">
-      <div class="hol-head">
-        <div>
-          <h2>วันหยุดที่มีผลกับการคำนวณ</h2>
-          <p class="desc">วันหยุดสถาบันการเงินไทย และวันที่มีกองทุนในโมเดลหยุดทำการ</p>
-        </div>
+      <h2>ตารางวันหยุดโมเดล Auto Top Funds</h2>
+      <p class="desc">วันหยุดสถาบันการเงินไทย และวันที่มีกองทุนในโมเดลหยุดทำการ</p>
+      <div class="hol-head" style="justify-content:flex-start;margin-bottom:10px;">
         <select id="ovMonth" aria-label="เลือกเดือน"></select>
+        <select id="ovModel" aria-label="เลือกโมเดล"></select>
       </div>
       <div class="tbl-wrap" id="ovHol"></div>
     </section>
   </div>
-  <div class="cta"><button type="button" class="btn-main" id="goCalc">เริ่มคำนวณ</button></div>
 </main>
 
 <!-- ═════════ แท็บ 2: คำนวณ ═════════ -->
-<main class="page" id="pageCalc" role="tabpanel" hidden>
+<main class="page" id="pageCalc" role="tabpanel">
   <div class="calc">
     <section class="card rail" aria-label="ข้อมูลรายการ">
       <div class="blk">
         <p class="blk-title">ประเภทรายการ</p>
         <div class="seg" id="segAction">
           <button type="button" data-v="sell" aria-pressed="true">รายการขาย</button>
-          <button type="button" data-v="switch" aria-pressed="false">สับเปลี่ยนโมเดล<br><span style="font-size:11.5px;font-weight:400;">Wealth Plan</span></button>
+          <button type="button" data-v="switch" aria-pressed="false">สับเปลี่ยนโมเดล <span style="font-size:11.5px;font-weight:400;">(Wealth Plan)</span></button>
         </div>
       </div>
 
       <div class="blk">
         <p class="blk-title">ต้องการคำนวณ</p>
-        <div class="opts" id="optKnown">
+        <div class="opts row" id="optKnown">
           <button type="button" class="opt" data-v="send" aria-pressed="true"><span class="rd"></span><span><b id="optSendT">คำนวณวันรับเงิน</b><small id="optSendS">รู้วันส่ง IC Request</small></span></button>
           <button type="button" class="opt" data-v="target" aria-pressed="false"><span class="rd"></span><span><b>คำนวณวันส่ง IC Request</b><small id="optTargetS">รู้วันรับเงิน</small></span></button>
         </div>
@@ -246,17 +363,15 @@ button,input,select{font:inherit;color:inherit;}
         <span class="sub-label" id="srcLabel" hidden>โมเดลต้นทาง</span>
         <div class="chips" id="chipsModel"></div>
         <div id="destWrap" hidden>
-          <span class="sub-label" style="margin-top:14px;">โมเดลปลายทาง</span>
+          <span class="sub-label" style="margin-top:10px;">โมเดลปลายทาง</span>
           <div class="chips dest" id="chipsDest"></div>
         </div>
       </div>
 
       <div class="blk" id="blkDetail">
         <p class="blk-title" id="detailTitle">รายละเอียดการขาย</p>
-        <span class="sub-label">ประเภท</span>
-        <div class="seg" id="segTxn"></div>
-        <div id="acctWrap">
-          <span class="sub-label" style="margin-top:12px;">รับเงินเข้า</span>
+        <div class="lrow"><span class="sub-label">ประเภท</span><div class="seg" id="segTxn"></div></div>
+        <div class="lrow" id="acctWrap"><span class="sub-label">รับเงินเข้า</span>
           <div class="seg" id="segAcct">
             <button type="button" data-v="collateral" aria-pressed="true">หลักประกัน (-2)</button>
             <button type="button" data-v="ats" aria-pressed="false">ATS</button>
@@ -266,16 +381,20 @@ button,input,select{font:inherit;color:inherit;}
 
       <div class="blk">
         <p class="blk-title" id="dateTitle">วันที่และเวลา</p>
-        <label class="sub-label" for="dateIn" id="dateLabel">วันที่ส่ง IC Request</label>
-        <input type="date" id="dateIn" class="date-in">
-        <div class="hint" id="dateHint"></div>
+        <div class="dt" id="dtRow">
+        <div>
+          <label class="sub-label" for="dateIn" id="dateLabel">วันที่ส่ง IC Request</label>
+          <input type="date" id="dateIn" class="date-in">
+        </div>
         <div id="cutoffWrap">
-          <span class="sub-label" style="margin-top:12px;">เวลาส่ง IC Request</span>
+          <span class="sub-label">เวลาส่ง</span>
           <div class="seg" id="segCutoff">
             <button type="button" data-v="before" aria-pressed="true">ก่อน 15:00</button>
             <button type="button" data-v="after" aria-pressed="false">หลัง 15:00</button>
           </div>
         </div>
+        </div>
+        <div class="hint" id="dateHint"></div>
       </div>
     </section>
 
@@ -304,6 +423,7 @@ const TH_MO=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','ม�
 const TH_MON=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
 function fmtThai(d){return `วัน${TH_DAY[d.getDay()]}ที่ ${d.getDate()} ${TH_MO[d.getMonth()]} ${d.getFullYear()+543}`;}
 function fmtShort(d){return `${d.getDate()} ${TH_MO[d.getMonth()]} ${d.getFullYear()+543}`;}
+function fmtMid(d){return `${TH_DAY_S[d.getDay()]} ${d.getDate()} ${TH_MO[d.getMonth()]} ${d.getFullYear()+543}`;}
 function fmtMonth(d){return `${TH_MO[d.getMonth()]} ${d.getFullYear()+543}`;}
 function dn(m){return SETTINGS.names[m]||m;}
 function isSP(m){return m==='SP'||dn(m)==='FIXEDSP';}
@@ -328,7 +448,7 @@ function applyData(d,isFallback){
   $('dataPill').classList.toggle('fallback',!!isFallback);
   const ref=SETTINGS.refDate?`ข้อมูล ณ เดือน ${fmtMonth(new Date(SETTINGS.refDate+'T00:00:00'))}`:'ข้อมูล';
   const cov=SETTINGS.coverEnd?` (แสดงข้อมูลวันหยุดกองทุนถึงเดือน ${fmtMonth(SETTINGS.coverEnd)})`:'';
-  $('dataText').innerHTML=`<b>${isFallback?'[ข้อมูลสำรอง] ':''}${ref}</b>${cov.trim()}`;
+  $('dataText').innerHTML=`<b>${isFallback?'[ข้อมูลสำรอง] ':''}${ref}</b> ${cov.trim()}`;
   renderChips();clampDate();renderOverview();render();
 }
 async function loadData(){
@@ -450,29 +570,40 @@ function renderOverview(){
   const sel=$('ovMonth'),prev=sel.value,list=overviewMonths();
   sel.innerHTML=list.map(k=>{const [y,m]=k.split('-');return `<option value="${k}">${TH_MON[+m-1]} ${+y+543}</option>`;}).join('');
   if(list.includes(prev))sel.value=prev;
+  const ms=$('ovModel'),pm=ms.value;
+  ms.innerHTML='<option value="">ทุกโมเดล</option>'+Object.keys(SETTINGS.models).map(m=>`<option value="${m}">${dn(m)}</option>`).join('');
+  if(pm&&SETTINGS.models[pm]!==undefined)ms.value=pm;
   renderOvHol();
 }
 function renderOvHol(){
-  const k=$('ovMonth').value;
+  const k=$('ovMonth').value,model=$('ovModel').value;
   if(!k){$('ovHol').innerHTML='<p class="empty-row">ยังไม่มีข้อมูลวันหยุด</p>';return;}
   const thai=new Set(SETTINGS.thaiHolidays.filter(d=>d.startsWith(k))),by={};
-  Object.keys(SETTINGS.models).forEach(m=>(SETTINGS.modelHolidays[m]||[]).forEach(d=>{if(d.startsWith(k))(by[d]=by[d]||[]).push(dn(m));}));
+  if(model){
+    Object.entries(SETTINGS.holidayFunds[model]||{}).forEach(([d,f])=>{if(d.startsWith(k))by[d]=f.length?f:['(ไม่ระบุชื่อกองทุน)'];});
+  }else{
+    Object.keys(SETTINGS.models).forEach(m=>(SETTINGS.modelHolidays[m]||[]).forEach(d=>{if(d.startsWith(k))(by[d]=by[d]||[]).push(dn(m));}));
+  }
   thai.forEach(d=>by[d]=by[d]||[]);
   const keys=Object.keys(by).filter(d=>!isWeekend(new Date(d+'T00:00:00'))).sort();
-  let h='<table class="hol-table"><thead><tr><th>วันที่</th><th>หยุด</th></tr></thead><tbody>';
+  let h=`<table class="hol-table"><thead><tr><th>วันที่</th><th>${model?`กองทุนใน ${dn(model)} ที่หยุด`:'โมเดลที่มีกองทุนหยุด'}</th></tr></thead><tbody>`;
   keys.forEach(d=>{const dt=new Date(d+'T00:00:00');
     const tags=thai.has(d)?'<span class="tag th">วันหยุดสถาบันการเงินไทย</span>':by[d].map(x=>`<span class="tag">${x}</span>`).join('');
-    h+=`<tr><td>${TH_DAY_S[dt.getDay()]} ${fmtShort(dt)}</td><td>${tags}</td></tr>`;});
-  if(!keys.length)h+='<tr><td colspan="2" class="empty-row">ไม่มีวันหยุดในวันทำการของเดือนนี้</td></tr>';
-  $('ovHol').innerHTML=h+'</tbody></table><p class="foot-hint">แสดงเฉพาะวันจันทร์–ศุกร์ · วันหยุดไทยมีผลกับทุกโมเดล</p>';
+    h+=`<tr><td>${fmtMid(dt)}</td><td>${tags}</td></tr>`;});
+  if(!keys.length)h+=`<tr><td colspan="2" class="empty-row">ไม่มีวันหยุด${model?`ของ ${dn(model)} `:''}ในเดือนนี้</td></tr>`;
+  $('ovHol').innerHTML=h+'</tbody></table>';
 }
 
 // ══ แท็บคำนวณ ════════════════════════════════════════════════════════════
+function nextDest(){
+  const codes=Object.keys(SETTINGS.models);
+  if(S.dest===S.model||!codes.includes(S.dest)){const i=codes.indexOf(S.model);S.dest=codes[(i+1)%codes.length]||'';}
+}
 function renderChips(){
   const codes=Object.keys(SETTINGS.models);
-  [['chipsModel','model'],['chipsDest','dest']].forEach(([id,key])=>{
-    $(id).innerHTML=codes.map(c=>`<button type="button" data-v="${c}" aria-pressed="${S[key]===c}">${dn(c)}</button>`).join('');
-  });
+  nextDest();
+  $('chipsModel').innerHTML=codes.map(c=>`<button type="button" data-v="${c}" aria-pressed="${S.model===c}">${dn(c)}</button>`).join('');
+  $('chipsDest').innerHTML=codes.map(c=>`<button type="button" data-v="${c}" aria-pressed="${S.dest===c}"${c===S.model?' disabled title="เป็นโมเดลต้นทางอยู่"':''}>${dn(c)}</button>`).join('');
 }
 function syncControls(){
   const sw=S.action==='switch',sp=isSP(S.model);
@@ -489,152 +620,152 @@ function syncControls(){
   [['segAction','action'],['optKnown','known'],['segAcct','acct'],['segCutoff','cutoff'],['chipsModel','model'],['chipsDest','dest']]
     .forEach(([id,k])=>$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===S[k])));
 
-  $('optSendT').textContent=sw?'คำนวณวันลงทุนโมเดลปลายทาง':'คำนวณวันรับเงิน';
+  $('optSendT').textContent=sw?'คำนวณวันลงทุนปลายทาง':'คำนวณวันรับเงิน';
   $('optSendS').textContent='รู้วันส่ง IC Request';
-  $('optTargetS').textContent=sw?'รู้วันลงทุนโมเดลปลายทาง':'รู้วันรับเงิน';
+  $('optTargetS').textContent=sw?'รู้วันลงทุนปลายทาง':'รู้วันรับเงิน';
   $('modelTitle').textContent=sw?'โมเดลต้นทาง → ปลายทาง':'โมเดล';
   $('srcLabel').hidden=!sw; $('destWrap').hidden=!sw;
   $('cutoffWrap').hidden=S.known!=='send';
+  $('dtRow').classList.toggle('one',S.known!=='send');
   $('dateTitle').textContent=S.known==='send'?'วันที่และเวลา':'วันที่';
   $('dateLabel').textContent={forward:'วันที่ส่ง IC Request',reverse:'วันที่ต้องการรับเงิน (Settlement Date)',wealth:'วันที่ส่ง IC Request',wealthrev:'วันที่ต้องการลงทุนในโมเดลปลายทาง'}[mode()];
   if($('dateIn').value!==S.date)$('dateIn').value=S.date;
+  // เลขขั้นตอนเรียงใหม่ตามกล่องที่แสดงอยู่
+  let n=0;document.querySelectorAll('.rail .blk').forEach(b=>{if(!b.hidden)b.querySelector('.blk-title').dataset.n=++n;});
 }
 
 let LAST=null;
 function render(){
+  renderChips();
   syncControls();
-  const prob=dateProblem(),hint=$('dateHint'),{min,max}=getRange();
+  const prob=dateProblem(),hint=$('dateHint'),{max}=getRange();
   if(prob){hint.textContent=prob;hint.className='hint bad';}
   else{
     const d=new Date(S.date+'T00:00:00');let extra='';
     if(isWeekend(d))extra='ตรงกับเสาร์-อาทิตย์';
     else if(SETTINGS.thaiHolidays.includes(S.date))extra='ตรงกับวันหยุดสถาบันการเงินไทย';
     if(extra&&S.known==='send')extra+=' ระบบเลื่อนเป็นวันทำการถัดไปให้';
-    hint.textContent=extra||`เลือกได้ ${fmtShort(min)} ถึง ${max?fmtShort(max):'-'}`;
+    hint.textContent=extra||(max?`เลือกได้ถึง ${fmtShort(max)} ตามข้อมูลวันหยุดกองทุนที่มี`:'');
     hint.className=extra?'hint bad':'hint';
   }
   if(prob||!S.model){LAST=null;$('slip').innerHTML=`<div class="empty"><strong>ยังคำนวณไม่ได้</strong>${prob||'ยังไม่มีข้อมูลโมเดล'}</div>`;return;}
   const r=compute();LAST=r;
-  $('slip').innerHTML=`<div id="capture">${answerHtml(r)}${stepsHtml(r)}${notesHtml(r)}${calendarHtml(r)}${footHtml()}</div>`+
-    `<div class="actions"><button type="button" class="btn" id="copyBtn">คัดลอกข้อความ</button><button type="button" class="btn" id="saveBtn">บันทึกเป็นรูป</button></div>`;
+  $('slip').innerHTML=`<div id="capture">${answerHtml(r)}${notesHtml(r)}<div class="res-body">${stepsHtml(r)}${calendarHtml(r)}</div>${footHtml()}</div>`;
   bindResult();
 }
 
 function answerHtml(r){
   const D=dn(S.dest),U='<u>คาดว่า</u> ';
-  if(r.mode==='forward')return `<div class="answer"><p class="lead">${U}ลูกค้าจะได้รับเงินเข้าบัญชี${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}</p><p class="big">${fmtThai(r.settle)}</p></div>`;
-  if(r.mode==='wealth')return `<div class="answer"><p class="lead">${U}เงินจะเข้าลงทุนในโมเดล ${D}</p><p class="big">${fmtThai(r.invest)}</p></div>`;
-  return `<div class="answer"><p class="lead">${U}ต้องส่ง IC Request ภายใน</p><p class="big">${fmtThai(r.ic)} <small>ก่อน 15:00</small></p><p class="alt">หรือ ${fmtThai(r.icAfter)} หลัง 15:00</p></div>`;
+  const B='<button type="button" class="btn" id="saveBtn">บันทึกเป็นรูป</button>';
+  if(r.mode==='forward')return `<div class="answer"><div><p class="lead">${U}ลูกค้าจะได้รับเงินเข้าบัญชี${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}</p><p class="big">${fmtThai(r.settle)}</p></div>${B}</div>`;
+  if(r.mode==='wealth')return `<div class="answer"><div><p class="lead">${U}เงินจะเข้าลงทุนในโมเดล ${D}</p><p class="big">${fmtThai(r.invest)}</p></div>${B}</div>`;
+  return `<div class="answer"><div><p class="lead"><u>แนะนำ</u>ให้ส่ง IC Request ภายใน</p><p class="big">${fmtThai(r.ic)} <small>ก่อน 15:00</small></p><p class="alt">หรือ ${fmtThai(r.icAfter)} หลัง 15:00</p></div>${B}</div>`;
 }
 
 function stepList(r){
-  const A=SETTINGS.adj,src=dn(S.model),D=dn(S.dest),sw=S.action==='switch';
+  const src=dn(S.model),D=dn(S.dest),sw=S.action==='switch';
   const steps=[];
-  steps.push({n:1,what:'ส่ง IC Request',
-    when:r.icAfter?`${fmtThai(r.ic)} ก่อน 15:00<span class="or">หรือ ${fmtThai(r.icAfter)} หลัง 15:00</span>`:`${fmtThai(r.ic)}<span class="or">${S.cutoff==='before'?'ก่อน':'หลัง'} 15:00</span>`,
-    why:''});
-  steps.push({n:2,what:`Transaction Date${sw?` (${src})`:''}`,when:fmtThai(r.txn),
-    why:r.icAfter?`+${A.before} วันทำการ ถ้าส่งก่อน 15:00 / +${A.after} ถ้าส่งหลัง 15:00`:`+${S.cutoff==='before'?A.before:A.after} วันทำการจากวันส่ง IC Request`});
+  steps.push({n:1,what:'ส่ง IC Request',when:fmtMid(r.ic),
+    sub:r.icAfter?`ก่อน 15:00<br>หรือ ${fmtMid(r.icAfter)} หลัง 15:00`:`${S.cutoff==='before'?'ก่อน':'หลัง'} 15:00`});
+  steps.push({n:2,what:`Transaction Date${sw?` (${src})`:''}`,when:fmtMid(r.txn)});
   if(!sw){
-    steps.push({n:3,what:'Settlement Date (เงินเข้าบัญชี)',when:fmtThai(r.settle),
-      why:`T+${r.total} วันทำการ · ${src} ${TXN_LABEL[S.txn]} เข้า${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}`});
+    steps.push({n:3,what:'Settlement Date (เงินเข้าบัญชี)',when:fmtMid(r.settle),sub:`เข้า${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}`});
   }else{
-    steps.push({n:3,what:`Settlement Date (${src})`,when:fmtThai(r.settle),why:`T+${r.total} วันทำการ${r.txnType==='reduceAll'?' (ลดเงินทั้งหมด)':''} · เงินเข้าบัญชี -2 ของโมเดล ${D}`});
-    steps.push({n:4,what:`ลงทุนในโมเดล ${D}`,when:fmtThai(r.invest),why:'+1 วันทำการหลังเงินเข้า (นับวันหยุดไทย)'});
+    steps.push({n:3,what:`Settlement Date (${src})`,when:fmtMid(r.settle),sub:`เงินเข้าบัญชี -2`});
+    steps.push({n:4,what:`ลงทุนในโมเดล ${D}`,when:fmtMid(r.invest),
+      note:r.intlFunds?`<b>มี ${r.intlFunds.length||'บาง'} กองทุนติดวันหยุด<i class="info" data-tip="กองทุนในโมเดล ${D} ที่ติดวันหยุด ${fmtShort(r.invest)}|${r.intlFunds.join(', ')}|plain">i</i></b>ระบบจะจัดสรรเงินลงทุนในกองทุนที่ไม่ติดวันหยุดก่อน ส่วนกองทุนที่ติดวันหยุดจะลงทุนในวันทำการถัดไป`:''});
   }
   return steps;
 }
 function stepsHtml(r){
-  return '<ol class="stepper">'+stepList(r).map(s=>`<li class="st${s.n}" data-step="${s.n}" tabindex="0"><span class="num">${s.n}</span><div class="what">${s.what}</div><div class="when">${s.when}</div>${s.why?`<div class="why">${s.why}</div>`:''}</li>`).join('')+'</ol>';
+  return '<ol class="tl">'+stepList(r).map(s=>`<li class="st${s.n}" data-step="${s.n}" tabindex="0"><span class="num">${s.n}</span><div class="what">${s.what}</div><div class="when">${s.when}</div>${s.sub?`<div class="sub">${s.sub}</div>`:''}${s.note?`<div class="tl-note">${s.note}</div>`:''}</li>`).join('')+'</ol>';
 }
 
 function notesHtml(r){
   const n=[];
   if(r.shifted)n.push(`<div class="note red">วันที่เลือก (${fmtThai(r.input)}) เป็นวันหยุด ระบบเลื่อนเป็นวันทำการถัดไปให้</div>`);
-  if(r.intlFunds)n.push(`<div class="note amb">${fmtThai(r.invest)} บางกองทุนในโมเดล ${dn(S.dest)} หยุดทำการ${r.intlFunds.length?` (${r.intlFunds.join(', ')})`:''} อาจลงทุนได้วันถัดไป</div>`);
   const end=SETTINGS.coverEnd;
   if(end&&[r.ic,r.icAfter,r.txn,r.settle,r.invest].some(d=>d&&d>end))
     n.push(`<div class="note red">บางวันในผลลัพธ์เลยช่วงข้อมูลวันหยุดกองทุน (ถึง ${fmtShort(end)}) ผลอาจคลาดเคลื่อน</div>`);
   return n.length?`<div class="notes">${n.join('')}</div>`:'';
 }
 
+// ปฏิทินต่อเนื่อง: เฉพาะสัปดาห์ตั้งแต่วันแรกถึงวันสุดท้ายของผลลัพธ์ (ข้ามเดือนไม่ต้องเลื่อนดูหลายเดือน)
 function calendarHtml(r){
   const thai=new Set(SETTINGS.thaiHolidays),intl=new Set(SETTINGS.modelHolidays[S.model]||[]),fm=SETTINGS.holidayFunds[S.model]||{};
   const marks={};
-  const put=(d,n,ghost)=>{if(d)marks[toDateStr(d)]={n,ghost};};
-  put(r.icAfter,1,true);put(r.ic,1,false);put(r.txn,2);put(r.settle,3);put(r.invest,4);
+  const put=(d,n)=>{if(d)marks[toDateStr(d)]=n;};
+  put(r.ic,1);put(r.txn,2);put(r.settle,3);put(r.invest,4);
+  const boldDay=r.icAfter?toDateStr(r.icAfter):'';
   const all=[r.icAfter,r.ic,r.txn,r.settle,r.invest].filter(Boolean);
   const first=new Date(Math.min(...all)),last=new Date(Math.max(...all));
-  const fs=toDateStr(first),ls=toDateStr(last);
-  let h=`<div class="cal-area"><div class="key">
-    <span><i class="sw th">13</i>วันหยุดสถาบันการเงินไทย</span>
-    <span><i class="sw intl">12</i>มีกองทุนใน ${dn(S.model)} หยุด (ชี้เพื่อดูชื่อ)</span>
-    <span><i class="sw wk">10</i>เสาร์-อาทิตย์</span>
-    <span><i class="sw path"></i>ช่วงตั้งแต่ส่งคำสั่งถึงวันสุดท้าย</span>
-  </div><div class="cals">`;
-  let cur=new Date(first.getFullYear(),first.getMonth(),1);
-  const end=new Date(last.getFullYear(),last.getMonth(),1);
-  while(cur<=end){
-    const y=cur.getFullYear(),m=cur.getMonth(),so=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();
-    h+=`<div class="cal"><h3>${TH_MON[m]} ${y+543}</h3><div class="g">`+['อา','จ','อ','พ','พฤ','ศ','ส'].map(x=>`<div class="dow">${x}</div>`).join('');
-    for(let i=0;i<so;i++)h+='<div></div>';
-    for(let day=1;day<=dim;day++){
-      const dt=new Date(y,m,day),ds=toDateStr(dt);let c='d',tip='',st='',badge='';
-      if(ds>=fs&&ds<=ls)c+=' path';
-      if(isWeekend(dt))c+=' wk';
-      else if(thai.has(ds)){c+=' th';tip='วันหยุดสถาบันการเงินไทย';}
-      else if(intl.has(ds)){c+=' intl';tip='กองทุนที่หยุด: '+(fm[ds]||[]).join(', ');}
-      const mk=marks[ds];
-      if(mk){c+=` mk st${mk.n}${mk.ghost?' ghost':''}`;st=` data-step="${mk.n}"`;badge=`<span class="badge">${mk.n}</span>`;}
-      h+=`<div class="${c}"${st}${tip?` title="${tip}"`:''}>${day}${badge}</div>`;
-    }
-    h+='</div></div>';
-    cur.setMonth(cur.getMonth()+1);
+  const start=new Date(first);start.setDate(start.getDate()-start.getDay());
+  const end=new Date(last);end.setDate(end.getDate()+(6-end.getDay()));
+  const title=first.getMonth()===last.getMonth()&&first.getFullYear()===last.getFullYear()
+    ?`${TH_MON[first.getMonth()]} ${first.getFullYear()+543}`
+    :`${TH_MON[first.getMonth()]}${first.getFullYear()!==last.getFullYear()?' '+(first.getFullYear()+543):''} – ${TH_MON[last.getMonth()]} ${last.getFullYear()+543}`;
+  let h=`<div class="cal-area"><div class="cal-head"><h3>${title}</h3><div class="key">
+    <span><i class="sw th"></i>วันหยุดสถาบันการเงินไทย</span>
+    <span><i class="sw intl"></i>วันหยุดกองทุนในโมเดล ${dn(S.model)}</span>
+    <span><i class="sw wk"></i>เสาร์-อาทิตย์</span>
+    <span class="tip-hint">ชี้หรือแตะวันหยุดเพื่อดูรายละเอียด</span>
+  </div></div><div class="cal"><div class="g">`+['อา','จ','อ','พ','พฤ','ศ','ส'].map(x=>`<div class="dow">${x}</div>`).join('');
+  for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
+    const ds=toDateStr(d);let c='d',tip='',st='',badge='';
+    const showMo=d.getDate()===1||ds===toDateStr(start);
+    if(isWeekend(d))c+=' wk';
+    else if(thai.has(ds)){c+=' th';tip='วันหยุดสถาบันการเงินไทย|';}
+    else if(intl.has(ds)){c+=' intl';tip=`วันหยุดกองทุนในโมเดล ${dn(S.model)}|${(fm[ds]||[]).join(', ')}`;}
+    const n=marks[ds];
+    if(n){c+=` mk st${n}`;st=` data-step="${n}"`;badge=`<span class="badge">${n}</span>`;}
+    else if(ds===boldDay)c+=' bold';
+    h+=`<div class="${c}"${st}${tip?` data-tip="${tip}"`:''}>${showMo?`<span class="mo">${TH_MO[d.getMonth()]}</span>`:''}${d.getDate()}${badge}</div>`;
   }
-  return h+'</div></div>';
+  return h+'</div></div></div>';
 }
 
 function footHtml(){
   const rd=SETTINGS.refDate?` ณ เดือน ${fmtMonth(new Date(SETTINGS.refDate+'T00:00:00'))}`:'';
   return `<div class="foot"><strong>หมายเหตุ</strong><ul>
     <li>อ้างอิง Settlement Date และวันหยุดกองทุน จากสัดส่วนกองทุนในแต่ละโมเดล${rd}</li>
-    <li>เป็นการประมาณการเบื้องต้น โดยใช้กองทุนที่มี Settlement Date สูงสุดในแต่ละโมเดล</li>
-    <li>ผลจริงอาจคลาดเคลื่อนจากการปรับสัดส่วนกองทุน หรือเงื่อนไขการข้ามวันหยุดต่างประเทศของแต่ละ บลจ.</li>
-    <li><b>ตรวจสอบวัน Settlement จริงได้ในระบบ FundConnext หลังจากวันทำรายการ (Transaction Date)</b></li></ul></div>`;
+    <li>คำนวณจากกองทุนที่มี Settlement Date สูงสุดในแต่ละโมเดล</li>
+    <li>ผลลัพธ์จริงอาจคลาดเคลื่อนได้จากการปรับสัดส่วนกองทุน หรือเงื่อนไขการข้ามวันหยุดต่างประเทศที่แตกต่างกันไปในแต่ละ บลจ.</li>
+    <li><b>ข้อมูลเป็นเพียงการประมาณการ แนะนำตรวจสอบวัน Settlement จริงในระบบ FundConnext หลังจากระบบส่งคำสั่งเรียบร้อยแล้ว</b></li></ul></div>`;
 }
 
-function plainText(r){
-  const strip=s=>s.replace(/<span class="or">/g,' ').replace(/<[^>]+>/g,'');
-  const head=r.mode==='forward'?`คาดว่าได้รับเงิน: ${fmtThai(r.settle)}`:r.mode==='wealth'?`คาดว่าลงทุนในโมเดล ${dn(S.dest)}: ${fmtThai(r.invest)}`:`คาดว่าต้องส่ง IC Request ภายใน: ${fmtThai(r.ic)} ก่อน 15:00 (หรือ ${fmtThai(r.icAfter)} หลัง 15:00)`;
-  const lines=[`Auto Top Funds – ${S.action==='sell'?`รายการขาย ${dn(S.model)}`:`สับเปลี่ยน ${dn(S.model)} → ${dn(S.dest)}`}`,head,''];
-  stepList(r).forEach(s=>lines.push(`${s.n}. ${s.what}: ${strip(s.when)}`));
-  lines.push('','* เป็นการประมาณการ ตรวจสอบวัน Settlement จริงได้ใน FundConnext หลังวัน Transaction Date');
-  return lines.join('\n');
+// กล่องรายละเอียดวันหยุด (ชี้เมาส์ หรือแตะบนมือถือ)
+const TIP=document.createElement('div');TIP.className='tip';TIP.hidden=true;document.body.appendChild(TIP);
+function showTip(el){
+  const [t,f,plain]=el.dataset.tip.split('|');
+  TIP.innerHTML=`<b>${t}</b>${f?(plain?f:`กองทุนที่หยุด: ${f}`):''}`;TIP.hidden=false;
+  const r=el.getBoundingClientRect(),tw=TIP.offsetWidth;
+  let x=r.left+window.scrollX+r.width/2-tw/2;x=Math.max(8,Math.min(x,document.documentElement.clientWidth-tw-8));
+  TIP.style.left=x+'px';TIP.style.top=(r.top+window.scrollY-TIP.offsetHeight-8)+'px';
 }
+function hideTip(){TIP.hidden=true;}
 
 function bindResult(){
-  // ชี้ที่ขั้นตอน → ไฮไลต์วันในปฏิทิน
-  document.querySelectorAll('.stepper li').forEach(li=>{
-    const on=v=>document.querySelectorAll(`.cal .d[data-step="${li.dataset.step}"]`).forEach(x=>x.classList.toggle('focus',v));
+  document.querySelectorAll('.tl li').forEach(li=>{
+    const on=v=>{li.classList.toggle('hl',v);document.querySelectorAll(`.cal .d[data-step="${li.dataset.step}"]`).forEach(x=>x.classList.toggle('focus',v));};
     li.addEventListener('mouseenter',()=>on(true));li.addEventListener('mouseleave',()=>on(false));
     li.addEventListener('focus',()=>on(true));li.addEventListener('blur',()=>on(false));
   });
-  $('copyBtn').addEventListener('click',async()=>{
-    const b=$('copyBtn');
-    try{await navigator.clipboard.writeText(plainText(LAST));b.textContent='คัดลอกแล้ว';}
-    catch(e){b.textContent='คัดลอกไม่สำเร็จ';}
-    setTimeout(()=>b.textContent='คัดลอกข้อความ',1800);
+  document.querySelectorAll('#slip [data-tip]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>showTip(el));el.addEventListener('mouseleave',hideTip);
+    el.addEventListener('click',e=>{e.stopPropagation();TIP.hidden?showTip(el):hideTip();});
   });
   $('saveBtn').addEventListener('click',async()=>{
-    const b=$('saveBtn');b.disabled=true;b.textContent='กำลังบันทึก…';
+    const b=$('saveBtn');b.disabled=true;b.textContent='กำลังบันทึก…';hideTip();
     try{
-      const c=await html2canvas($('capture'),{backgroundColor:'#ffffff',scale:2});
+      const c=await html2canvas($('capture'),{backgroundColor:'#ffffff',scale:2,ignoreElements:el=>el.id==='saveBtn'});
       const a=document.createElement('a');a.download='settlement_'+S.date+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
       b.textContent='บันทึกแล้ว';
     }catch(e){b.textContent='บันทึกไม่สำเร็จ';}
     setTimeout(()=>{b.disabled=false;b.textContent='บันทึกเป็นรูป';},1800);
   });
 }
+document.addEventListener('click',hideTip);
+window.addEventListener('scroll',hideTip,{passive:true});
 
 // ── Tabs ─────────────────────────────────────────────────────────────────
 function showTab(t){
@@ -645,8 +776,8 @@ function showTab(t){
 }
 $('tabOv').addEventListener('click',()=>showTab('ov'));
 $('tabCalc').addEventListener('click',()=>showTab('calc'));
-$('goCalc').addEventListener('click',()=>showTab('calc'));
 $('ovMonth').addEventListener('change',renderOvHol);
+$('ovModel').addEventListener('change',renderOvHol);
 
 // ── Events ───────────────────────────────────────────────────────────────
 [['segAction','action'],['optKnown','known'],['segAcct','acct'],['segCutoff','cutoff'],['chipsModel','model'],['chipsDest','dest']]
