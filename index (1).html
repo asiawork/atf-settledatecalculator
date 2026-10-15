@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Settlement Date Calculator | Auto Top Funds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14213D; --ink-2:#4A5872; --ink-3:#7D8AA3;
+  --paper:#EEF2F7; --surface:#FFFFFF; --line:#DCE2EA; --soft:#F6F8FB;
+  --ic:#9A4A0B; --ic-bg:#FBEBDD;
+  --txn:#2457D6; --txn-bg:#E3EBFC;
+  --settle:#148A4A; --settle-bg:#DDF3E6;
+  --invest:#6D3FD0; --invest-bg:#ECE5FB;
+  --th:#B42318; --th-bg:#FBE3E3;
+  --intl:#8A5A00; --intl-bg:#FCEFC7;
+  --wk:#E4E8EF;
+  --warn:#B42318;
+}
+*{box-sizing:border-box;}
+[hidden]{display:none !important;}
+html{-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 'IBM Plex Sans Thai','Segoe UI',Tahoma,sans-serif;font-variant-numeric:tabular-nums;}
+button,input,select{font:inherit;color:inherit;}
+:focus-visible{outline:2px solid var(--txn);outline-offset:2px;}
+
+.top{max-width:1180px;margin:0 auto;padding:28px 24px 8px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.top h1{margin:0;font-size:26px;line-height:1.25;font-weight:700;letter-spacing:-.01em;}
+.top p{margin:2px 0 0;color:var(--ink-2);font-size:14px;}
+.data-pill{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:12.5px;color:var(--ink-2);}
+.data-pill i{width:8px;height:8px;border-radius:50%;background:var(--settle);flex-shrink:0;}
+.data-pill.fallback i{background:#D08700;}
+
+.layout{max-width:1180px;margin:0 auto;padding:16px 24px 48px;display:grid;grid-template-columns:360px 1fr;gap:24px;align-items:start;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;padding:12px 16px 40px;}.top{padding:20px 16px 4px;}}
+
+/* ── Form rail ── */
+.rail{background:var(--surface);border-radius:16px;padding:22px;border:1px solid var(--line);position:sticky;top:16px;}
+@media(max-width:900px){.rail{position:static;}}
+.q{margin:0 0 18px;}
+.q:last-child{margin-bottom:0;}
+.q-label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:7px;}
+.seg{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px;}
+.seg button{flex:1;border:0;background:transparent;border-radius:8px;padding:8px 6px;font-size:14px;font-weight:500;color:var(--ink-2);cursor:pointer;line-height:1.3;}
+.seg button[aria-pressed="true"]{background:var(--ink);color:#fff;font-weight:600;}
+.seg button:not([aria-pressed="true"]):hover{background:#E8EDF4;}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.chips button{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 2px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink);}
+.chips button:hover{border-color:var(--ink-3);}
+.chips button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff;}
+.chips.dest button[aria-pressed="true"]{background:var(--invest);border-color:var(--invest);}
+.date-in{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:15px;}
+.hint{font-size:12px;color:var(--ink-3);margin-top:6px;}
+.hint.bad{color:var(--warn);font-weight:500;}
+.divider{height:1px;background:var(--line);margin:20px -22px;}
+
+/* ── Result ── */
+.slip{background:var(--surface);border-radius:16px;border:1px solid var(--line);overflow:hidden;}
+.answer{padding:26px 28px 22px;border-bottom:1px solid var(--line);}
+.answer .lead{font-size:15px;color:var(--ink-2);margin:0;}
+.answer .big{font-size:34px;line-height:1.25;font-weight:700;margin:4px 0 0;letter-spacing:-.01em;}
+.answer .big small{font-size:20px;font-weight:600;color:var(--ink-2);}
+.answer .alt{font-size:17px;color:var(--ink-2);margin:6px 0 0;font-weight:500;}
+@media(max-width:600px){.answer{padding:20px;}.answer .big{font-size:26px;}}
+
+.body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:28px;padding:24px 28px;}
+@media(max-width:1000px){.body{grid-template-columns:1fr;padding:20px;}}
+
+.timeline{list-style:none;margin:0;padding:0;position:relative;}
+.timeline li{position:relative;padding:0 0 18px 30px;}
+.timeline li:last-child{padding-bottom:0;}
+.timeline li::before{content:"";position:absolute;left:7px;top:20px;bottom:-2px;width:2px;background:var(--line);}
+.timeline li:last-child::before{display:none;}
+.timeline .dot{position:absolute;left:0;top:5px;width:16px;height:16px;border-radius:50%;border:3px solid var(--surface);box-shadow:0 0 0 2px currentColor;background:currentColor;}
+.timeline .what{font-size:13px;font-weight:600;}
+.timeline .when{font-size:16px;font-weight:600;color:var(--ink);line-height:1.4;}
+.timeline .why{font-size:12.5px;color:var(--ink-3);}
+.c-ic{color:var(--ic);} .c-txn{color:var(--txn);} .c-settle{color:var(--settle);} .c-invest{color:var(--invest);}
+
+.notes{display:flex;flex-direction:column;gap:8px;margin-top:18px;}
+.note{font-size:13px;line-height:1.55;padding:9px 12px;border-radius:10px;}
+.note.shift{background:var(--th-bg);color:var(--th);}
+.note.intl{background:var(--intl-bg);color:var(--intl);}
+.note.cover{background:var(--th-bg);color:var(--th);font-weight:500;}
+
+/* calendar */
+.cals{display:flex;flex-wrap:wrap;gap:14px;}
+.cal{flex:1 1 230px;max-width:300px;}
+.cal h3{margin:0 0 6px;font-size:14px;font-weight:600;}
+.cal .g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;font-size:12px;}
+.cal .dow{text-align:center;color:var(--ink-3);font-size:11px;padding-bottom:2px;}
+.cal .d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:7px;position:relative;color:var(--ink);}
+.cal .d.path{background:var(--soft);box-shadow:inset 0 0 0 1px var(--line);}
+.cal .d.wk{background:var(--wk);color:var(--ink-3);}
+.cal .d.th{background:var(--th-bg);color:var(--th);font-weight:600;}
+.cal .d.intl{background:var(--intl-bg);color:var(--intl);font-weight:600;cursor:help;}
+.cal .d.m-ic,.cal .d.m-ic2,.cal .d.m-txn,.cal .d.m-settle,.cal .d.m-invest{color:#fff;font-weight:700;}
+.cal .d.m-ic{background:var(--ic);}
+.cal .d.m-ic2{background:var(--surface);color:var(--ic);box-shadow:inset 0 0 0 2px var(--ic);}
+.cal .d.m-txn{background:var(--txn);}
+.cal .d.m-settle{background:var(--settle);}
+.cal .d.m-invest{background:var(--invest);}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font-size:12px;color:var(--ink-2);}
+.legend span{display:inline-flex;align-items:center;gap:5px;}
+.legend b{width:11px;height:11px;border-radius:3px;display:inline-block;}
+
+.foot{padding:16px 28px 22px;border-top:1px solid var(--line);background:var(--soft);font-size:12.5px;color:var(--ink-2);}
+.foot ul{margin:4px 0 0;padding-left:18px;}
+.foot li{margin:2px 0;}
+@media(max-width:600px){.foot{padding:16px 20px;}}
+
+.actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 16px;font-size:14px;font-weight:500;cursor:pointer;}
+.btn:hover{border-color:var(--ink-3);}
+
+.empty{padding:56px 28px;text-align:center;color:var(--ink-2);}
+.empty strong{display:block;color:var(--ink);font-size:18px;margin-bottom:4px;}
+
+details.tn{margin-top:16px;background:var(--surface);border:1px solid var(--line);border-radius:16px;}
+details.tn summary{cursor:pointer;padding:14px 22px;font-weight:600;font-size:14px;list-style-position:inside;}
+details.tn .wrap{padding:0 22px 18px;overflow-x:auto;}
+.tn-table{width:100%;border-collapse:collapse;font-size:13px;min-width:460px;}
+.tn-table th,.tn-table td{padding:8px 10px;text-align:center;border-bottom:1px solid var(--line);}
+.tn-table th{font-weight:600;color:var(--ink-2);font-size:12px;}
+.tn-table td:first-child,.tn-table th:first-child{text-align:left;font-weight:600;}
+.tn-table tr.on td{background:var(--txn-bg);}
+.tn-table td.hit{background:var(--txn);color:#fff;font-weight:700;border-radius:6px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>Settlement Date Calculator</h1>
+    <p>Auto Top Funds Portfolio — หาวันรับเงิน วันส่งคำสั่ง และวันลงทุนโมเดลปลายทาง</p>
+  </div>
+  <div class="data-pill" id="dataPill"><i></i><span id="dataText">กำลังโหลดข้อมูล</span></div>
+</header>
+
+<main class="layout">
+  <!-- ── Form ── -->
+  <section class="rail" aria-label="ข้อมูลรายการ">
+    <div class="q">
+      <span class="q-label">ลูกค้าต้องการ</span>
+      <div class="seg" id="segAction">
+        <button type="button" data-v="sell" aria-pressed="true">ขายหน่วยลงทุน</button>
+        <button type="button" data-v="switch" aria-pressed="false">สับเปลี่ยนโมเดล<br><span style="font-size:11.5px;font-weight:400;">(Wealth Plan)</span></button>
+      </div>
+    </div>
+    <div class="q">
+      <span class="q-label">เรารู้วันไหน</span>
+      <div class="seg" id="segKnown">
+        <button type="button" data-v="send" aria-pressed="true">วันส่ง IC Request</button>
+        <button type="button" data-v="target" aria-pressed="false" id="knownTargetBtn">วันรับเงิน</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="q">
+      <span class="q-label" id="modelLabel">โมเดล</span>
+      <div class="chips" id="chipsModel"></div>
+    </div>
+    <div class="q" id="qDest" hidden>
+      <span class="q-label">โมเดลปลายทาง</span>
+      <div class="chips dest" id="chipsDest"></div>
+    </div>
+    <div class="q" id="qTxn">
+      <span class="q-label">ประเภทรายการ</span>
+      <div class="seg" id="segTxn">
+        <button type="button" data-v="reduce" aria-pressed="true">ลดเงิน</button>
+        <button type="button" data-v="close" aria-pressed="false">ปิดบัญชี</button>
+      </div>
+    </div>
+    <div class="q" id="qAcct">
+      <span class="q-label">รับเงินเข้าบัญชี</span>
+      <div class="seg" id="segAcct">
+        <button type="button" data-v="collateral" aria-pressed="true">หลักประกัน (-2)</button>
+        <button type="button" data-v="ats" aria-pressed="false">ATS</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="q">
+      <label class="q-label" for="dateIn" id="dateLabel">วันที่ส่ง IC Request</label>
+      <input type="date" id="dateIn" class="date-in">
+      <div class="hint" id="dateHint"></div>
+    </div>
+    <div class="q" id="qCutoff">
+      <span class="q-label">เวลาส่ง IC Request</span>
+      <div class="seg" id="segCutoff">
+        <button type="button" data-v="before" aria-pressed="true">ก่อน 15:00</button>
+        <button type="button" data-v="after" aria-pressed="false">หลัง 15:00</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Result ── -->
+  <section aria-live="polite">
+    <div class="slip" id="slip"></div>
+    <div class="actions" id="actions" hidden>
+      <button type="button" class="btn" id="saveBtn">บันทึกเป็นรูป</button>
+    </div>
+    <details class="tn" id="tnBox">
+      <summary>ตาราง T+N ของทุกโมเดล</summary>
+      <div class="wrap" id="tnTable"></div>
+    </details>
+  </section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════════════════
+//  ข้อมูลมาจาก data.json (อัปเดตจากหน้า settings.html) — ไม่ต้องแก้โค้ดไฟล์นี้
+// ════════════════════════════════════════════════════════════════════════
+const DATA_URL='./data.json';
+const FALLBACK_DATA={"updated":"2026-10-15","source":"portfolioweight.xlsx","coverStart":"2026-10-01","coverEnd":"2026-12-31","adj":{"before":1,"after":2,"reduce":0,"close":1,"collateral":0,"ats":1},"thaiHolidays":["2026-06-01","2026-06-03","2026-07-28","2026-07-29","2026-08-12","2026-10-13","2026-10-16","2026-10-23","2026-12-07","2026-12-10","2026-12-31"],"models":[{"code":"SP","name":"FIXEDSP","tn":1,"nFunds":4,"holidays":{}},{"code":"TDP","name":"FIXEDTDP","tn":2,"nFunds":7,"holidays":{}},{"code":"DIP","name":"FIXEDDP","tn":3,"nFunds":8,"holidays":{"2026-10-12":["UGIS-N"],"2026-11-01":["UGIS-N"],"2026-11-11":["UGIS-N"],"2026-11-26":["UGIS-N"],"2026-11-27":["UGIS-N"],"2026-12-24":["UGIS-N"],"2026-12-25":["UGIS-N"],"2026-12-28":["UGIS-N"]}},{"code":"CAA","name":"CAA","tn":5,"nFunds":14,"holidays":{"2026-10-01":["UOBSGC"],"2026-10-02":["UOBSGC"],"2026-10-03":["UOBSGC"],"2026-10-04":["UOBSGC"],"2026-10-05":["UOBSGC"],"2026-10-06":["UOBSGC"],"2026-10-07":["UOBSGC"],"2026-10-12":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-13":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-16":["BCAP-USL","BCAP-USND100","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-19":["UOBSGC"],"2026-10-23":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-08":["UOBSGC"],"2026-11-09":["UOBSGC","SCBGOLD"],"2026-11-11":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-25":["BCAP-USL","BCAP-USND100"],"2026-11-26":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-27":["BCAP-USL","BCAP-USND100"],"2026-12-07":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-10":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-23":["BCAP-USL","BCAP-USND100"],"2026-12-24":["BCAP-USL","BCAP-USND100","UOBSGC","SCBGOLD"],"2026-12-25":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","UOBSGC","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-30":["BCAP-USL"],"2026-12-31":["BCAP-USL","ES-US500","UOBSGC","SCBKEQTG","SCBGOLD","MSILVER"]}},{"code":"MAA","name":"MAA","tn":5,"nFunds":14,"holidays":{"2026-10-01":["UOBSGC"],"2026-10-02":["UOBSGC"],"2026-10-03":["UOBSGC"],"2026-10-04":["UOBSGC"],"2026-10-05":["UOBSGC"],"2026-10-06":["UOBSGC"],"2026-10-07":["UOBSGC"],"2026-10-12":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-13":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-16":["BCAP-USL","BCAP-USND100","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-19":["UOBSGC"],"2026-10-23":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-03":["K-JPX-A(A)"],"2026-11-08":["UOBSGC"],"2026-11-09":["UOBSGC","SCBGOLD"],"2026-11-11":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-23":["K-JPX-A(A)"],"2026-11-25":["BCAP-USL","BCAP-USND100"],"2026-11-26":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-27":["BCAP-USL","BCAP-USND100"],"2026-12-07":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-10":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-23":["BCAP-USL","BCAP-USND100"],"2026-12-24":["BCAP-USL","BCAP-USND100","UOBSGC","SCBGOLD"],"2026-12-25":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","UOBSGC","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-30":["BCAP-USL"],"2026-12-31":["BCAP-USL","ES-US500","UOBSGC","SCBKEQTG","SCBGOLD","MSILVER"]}},{"code":"AAA","name":"AAA","tn":5,"nFunds":13,"holidays":{"2026-10-01":["UOBSGC"],"2026-10-02":["UOBSGC"],"2026-10-03":["UOBSGC"],"2026-10-04":["UOBSGC"],"2026-10-05":["UOBSGC"],"2026-10-06":["UOBSGC"],"2026-10-07":["UOBSGC"],"2026-10-12":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-13":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-16":["BCAP-USL","BCAP-USND100","SCBKEQTG","SCBGOLD","MSILVER"],"2026-10-19":["UOBSGC"],"2026-10-23":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-03":["K-JPX-A(A)"],"2026-11-08":["UOBSGC"],"2026-11-09":["UOBSGC","SCBGOLD"],"2026-11-11":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-23":["K-JPX-A(A)"],"2026-11-25":["BCAP-USL","BCAP-USND100"],"2026-11-26":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","SCBKEQTG","SCBGOLD","MSILVER"],"2026-11-27":["BCAP-USL","BCAP-USND100"],"2026-12-07":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-10":["ES-US500","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-23":["BCAP-USL","BCAP-USND100"],"2026-12-24":["BCAP-USL","BCAP-USND100","UOBSGC","SCBGOLD"],"2026-12-25":["BCAP-USL","K-SEMQ","ES-US500","BCAP-USND100","K-USXNDQ-A(A)","K-JPX-A(A)","UOBSGC","SCBKEQTG","SCBGOLD","MSILVER"],"2026-12-30":["BCAP-USL"],"2026-12-31":["BCAP-USL","ES-US500","UOBSGC","SCBKEQTG","SCBGOLD","MSILVER"]}},{"code":"DAA","name":"DAA","tn":4,"nFunds":11,"holidays":{"2026-10-01":["K-CHINA-A(D)"],"2026-10-12":["BCAP-USL","LHEME-D","SCBS&P500","K-USXNDQ-A(D)","SCBNK225D","K-CHINA-A(D)","SCBKEQTG","K-GOLD-A(D)","MSILVER"],"2026-10-13":["LHEME-D","SCBS&P500","SCBNK225D","SCBKEQTG","MSILVER"],"2026-10-16":["BCAP-USL","LHEME-D","SCBS&P500","SCBNK225D","SCBKEQTG","MSILVER"],"2026-10-19":["K-CHINA-A(D)"],"2026-10-23":["LHEME-D","SCBS&P500","SCBNK225D","SCBKEQTG","MSILVER"],"2026-11-03":["SCBNK225D"],"2026-11-09":["K-GOLD-A(D)"],"2026-11-11":["BCAP-USL","LHEME-D","SCBS&P500","K-USXNDQ-A(D)","K-CHINA-A(D)","SCBKEQTG","K-GOLD-A(D)","MSILVER"],"2026-11-23":["SCBNK225D"],"2026-11-25":["BCAP-USL"],"2026-11-26":["BCAP-USL","LHEME-D","SCBS&P500","K-USXNDQ-A(D)","K-CHINA-A(D)","SCBKEQTG","K-GOLD-A(D)","MSILVER"],"2026-11-27":["BCAP-USL","LHEME-D"],"2026-12-07":["LHEME-D","SCBS&P500","SCBNK225D","SCBKEQTG","MSILVER"],"2026-12-10":["LHEME-D","SCBS&P500","SCBNK225D","SCBKEQTG","MSILVER"],"2026-12-23":["BCAP-USL"],"2026-12-24":["BCAP-USL","LHEME-D","K-CHINA-A(D)"],"2026-12-25":["BCAP-USL","LHEME-D","SCBS&P500","K-USXNDQ-A(D)","K-CHINA-A(D)","SCBKEQTG","K-GOLD-A(D)","MSILVER"],"2026-12-30":["BCAP-USL"],"2026-12-31":["BCAP-USL","LHEME-D","SCBS&P500","SCBNK225D","SCBKEQTG","MSILVER"]}},{"code":"TCT","name":"TCT","tn":5,"nFunds":15,"holidays":{"2026-10-01":["UOBSGC"],"2026-10-02":["UOBSGC"],"2026-10-03":["UOBSGC"],"2026-10-04":["UOBSGC"],"2026-10-05":["UOBSGC"],"2026-10-06":["UOBSGC"],"2026-10-07":["UOBSGC"],"2026-10-12":["SCBKEQTG","BCAP-USND100","SCBNK225","KKP TECH-H","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","KKP GHC-A","TLDEFENSE","LHSPACE-A"],"2026-10-13":["SCBKEQTG","B-BHARATA","SCBNK225","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","LHSPACE-A"],"2026-10-16":["SCBKEQTG","BCAP-USND100","B-BHARATA","SCBNK225","SCBS&P500A","LHNUKZ-A","LHQTUM-A","LHSPACE-A"],"2026-10-19":["UOBSGC"],"2026-10-23":["SCBKEQTG","B-BHARATA","SCBNK225","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","LHSPACE-A"],"2026-10-26":["B-BHARATA","ES-GTECH","KKP GHC-A","LHSPACE-A"],"2026-11-03":["SCBNK225"],"2026-11-08":["UOBSGC"],"2026-11-09":["UOBSGC"],"2026-11-11":["SCBKEQTG","BCAP-USND100","KKP TECH-H","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","KKP GHC-A","TLDEFENSE","LHSPACE-A"],"2026-11-23":["SCBNK225"],"2026-11-25":["BCAP-USND100"],"2026-11-26":["SCBKEQTG","BCAP-USND100","KKP TECH-H","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","KKP GHC-A","TLDEFENSE","LHSPACE-A"],"2026-11-27":["BCAP-USND100","LHNUKZ-A","LHQTUM-A","KKP GHC-A","LHSPACE-A"],"2026-12-07":["SCBKEQTG","B-BHARATA","SCBNK225","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","LHSPACE-A"],"2026-12-10":["SCBKEQTG","B-BHARATA","SCBNK225","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","LHSPACE-A"],"2026-12-23":["BCAP-USND100"],"2026-12-24":["BCAP-USND100","ES-EG-A","LHNUKZ-A","LHQTUM-A","KKP GHC-A","LHSPACE-A","UOBSGC"],"2026-12-25":["SCBKEQTG","BCAP-USND100","B-BHARATA","KKP TECH-H","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","KKP GHC-A","TLDEFENSE","LHSPACE-A","UOBSGC"],"2026-12-28":["B-BHARATA","ES-EG-A","ES-GTECH","KKP GHC-A","LHSPACE-A"],"2026-12-29":["B-BHARATA","ES-GTECH","LHSPACE-A"],"2026-12-31":["SCBKEQTG","B-BHARATA","SCBNK225","SCBS&P500A","ES-EG-A","ES-GTECH","LHNUKZ-A","LHQTUM-A","LHSPACE-A","UOBSGC"]}}]};
+
+let SETTINGS={models:{},names:{},adj:{},refDate:'',thaiHolidays:[],modelHolidays:{},holidayFunds:{},coverStart:null,coverEnd:null};
+const S={action:'sell',known:'send',model:'',dest:'',txn:'reduce',acct:'collateral',cutoff:'before',date:''};
+const $=id=>document.getElementById(id);
+
+// ── Data ─────────────────────────────────────────────────────────────────
+function applyData(d,isFallback){
+  SETTINGS.models={};SETTINGS.names={};SETTINGS.modelHolidays={};SETTINGS.holidayFunds={};
+  d.models.forEach(m=>{
+    SETTINGS.models[m.code]=Number(m.tn)||0;
+    SETTINGS.names[m.code]=m.name||m.code;
+    SETTINGS.holidayFunds[m.code]=m.holidays||{};
+    SETTINGS.modelHolidays[m.code]=Object.keys(m.holidays||{}).sort();
+  });
+  SETTINGS.adj={before:1,after:2,reduce:0,close:1,collateral:0,ats:1,...(d.adj||{})};
+  SETTINGS.thaiHolidays=[...(d.thaiHolidays||[])].sort();
+  SETTINGS.refDate=d.updated||'';
+  SETTINGS.coverStart=d.coverStart?new Date(d.coverStart+'T00:00:00'):null;
+  SETTINGS.coverEnd=d.coverEnd?new Date(d.coverEnd+'T00:00:00'):null;
+  const codes=Object.keys(SETTINGS.models);
+  if(!codes.includes(S.model))S.model=codes[0]||'';
+  if(!codes.includes(S.dest))S.dest=codes[1]||codes[0]||'';
+  $('dataPill').classList.toggle('fallback',!!isFallback);
+  const parts=[];
+  if(SETTINGS.refDate)parts.push('ข้อมูล ณ '+fmtShort(new Date(SETTINGS.refDate+'T00:00:00')));
+  if(SETTINGS.coverEnd)parts.push('วันหยุดกองทุนถึง '+fmtShort(SETTINGS.coverEnd));
+  $('dataText').textContent=(isFallback?'ข้อมูลสำรอง: ':'')+parts.join(', ');
+  renderChips();clampDate();render();
+}
+async function loadData(){
+  try{
+    const r=await fetch(DATA_URL+'?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('HTTP '+r.status);
+    applyData(await r.json(),false);
+  }catch(e){console.warn('data.json:',e.message);}
+}
+
+// ── Calc helpers (logic เดิม) ─────────────────────────────────────────────
+function toDateStr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+function isWeekend(d){const day=d.getDay();return day===0||day===6;}
+function addBusinessDays(start,days,set){let d=new Date(start),a=0;while(a<days){d.setDate(d.getDate()+1);if(isWeekend(d)||set.has(toDateStr(d)))continue;a++;}return d;}
+function subtractBusinessDays(start,days,set){let d=new Date(start),s=0;while(s<days){d.setDate(d.getDate()-1);if(isWeekend(d)||set.has(toDateStr(d)))continue;s++;}return d;}
+function buildCombined(model){const s=new Set(SETTINGS.thaiHolidays);(SETTINGS.modelHolidays[model]||[]).forEach(d=>s.add(d));return s;}
+function shiftToBusinessDay(d,thaiSet){const x=new Date(d);while(isWeekend(x)||thaiSet.has(toDateStr(x)))x.setDate(x.getDate()+1);return x;}
+
+const TH_DAY=['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัสบดี','ศุกร์','เสาร์'];
+const TH_MO=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const TH_MON=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+function fmtThai(d){return `วัน${TH_DAY[d.getDay()]}ที่ ${d.getDate()} ${TH_MO[d.getMonth()]} ${d.getFullYear()+543}`;}
+function fmtShort(d){return `${d.getDate()} ${TH_MO[d.getMonth()]} ${d.getFullYear()+543}`;}
+function dn(m){return SETTINGS.names[m]||m;}
+
+// mode เดิม 4 แบบ = การกระทำ × วันที่รู้
+function mode(){return S.action==='sell'?(S.known==='send'?'forward':'reverse'):(S.known==='send'?'wealth':'wealthrev');}
+
+// ── Compute: คำนวณเหมือนเวอร์ชันเดิมทุกขั้น ──────────────────────────────────
+function compute(){
+  const M=mode(), A=SETTINGS.adj;
+  const input=new Date(S.date+'T00:00:00');
+  const thaiSet=new Set(SETTINGS.thaiHolidays);
+  const src=buildCombined(S.model);
+  const cutoffDays=S.cutoff==='before'?A.before:A.after;
+  const r={mode:M,input};
+  if(M==='forward'||M==='reverse'){
+    const total=SETTINGS.models[S.model]+(S.txn==='reduce'?A.reduce:A.close)+(S.acct==='collateral'?A.collateral:A.ats);
+    r.total=total;
+    if(M==='forward'){
+      r.ic=shiftToBusinessDay(input,thaiSet);
+      r.shifted=toDateStr(r.ic)!==toDateStr(input);
+      r.txn=addBusinessDays(r.ic,cutoffDays,src);
+      r.settle=addBusinessDays(r.txn,total,src);
+    }else{
+      r.settle=input;
+      r.txn=subtractBusinessDays(r.settle,total,src);
+      r.ic=subtractBusinessDays(r.txn,A.before,src);
+      r.icAfter=subtractBusinessDays(r.txn,A.after,src);
+    }
+  }else{
+    const total=SETTINGS.models[S.model]+A.reduce+A.collateral; // สับเปลี่ยน = ลดเงิน เข้าหลักประกันเสมอ
+    r.total=total;
+    if(M==='wealth'){
+      r.ic=shiftToBusinessDay(input,thaiSet);
+      r.shifted=toDateStr(r.ic)!==toDateStr(input);
+      r.txn=addBusinessDays(r.ic,cutoffDays,src);
+      r.settle=addBusinessDays(r.txn,total,src);
+      r.invest=addBusinessDays(r.settle,1,thaiSet);
+    }else{
+      r.invest=shiftToBusinessDay(input,thaiSet);
+      r.shifted=toDateStr(r.invest)!==toDateStr(input);
+      r.settle=subtractBusinessDays(r.invest,1,thaiSet);
+      r.txn=subtractBusinessDays(r.settle,total,src);
+      r.ic=subtractBusinessDays(r.txn,A.before,src);
+      r.icAfter=subtractBusinessDays(r.txn,A.after,src);
+    }
+    // วันลงทุนตรงกับวันหยุดกองทุนต่างประเทศของโมเดลปลายทาง?
+    const ds=toDateStr(r.invest);
+    if(!thaiSet.has(ds)&&(SETTINGS.modelHolidays[S.dest]||[]).includes(ds))
+      r.intlFunds=(SETTINGS.holidayFunds[S.dest]||{})[ds]||[];
+  }
+  return r;
+}
+
+// ── Date range (ห้ามย้อนหลัง / เกินช่วงข้อมูล) ────────────────────────────────
+function getRange(){
+  const now=new Date();let min=new Date(now.getFullYear(),now.getMonth(),1);
+  if(SETTINGS.coverStart&&SETTINGS.coverStart>min)min=SETTINGS.coverStart;
+  const max=SETTINGS.coverEnd;
+  return {min,max,expired:!!(max&&max<min)};
+}
+function clampDate(){
+  const {min,max}=getRange(),el=$('dateIn');
+  el.min=toDateStr(min); if(max)el.max=toDateStr(max); else el.removeAttribute('max');
+  if(!S.date)S.date=toDateStr(new Date());
+  if(S.date<el.min)S.date=el.min;
+  if(max&&S.date>el.max)S.date=el.max;
+  el.value=S.date;
+}
+function dateProblem(){
+  const {min,max,expired}=getRange();
+  if(expired)return `ข้อมูลวันหยุดหมดช่วงแล้ว (ถึง ${fmtShort(max)}) แจ้งทีมให้อัปเดตข้อมูลก่อนใช้งาน`;
+  if(!S.date)return 'เลือกวันที่';
+  const d=new Date(S.date+'T00:00:00');
+  if(d<min)return `เลือกได้ตั้งแต่ ${fmtShort(min)} เป็นต้นไป`;
+  if(max&&d>max)return `ยังไม่มีข้อมูลวันหยุดกองทุนหลัง ${fmtShort(max)}`;
+  return '';
+}
+
+// ── Render ───────────────────────────────────────────────────────────────
+function renderChips(){
+  const codes=Object.keys(SETTINGS.models);
+  [['chipsModel','model'],['chipsDest','dest']].forEach(([id,key])=>{
+    $(id).innerHTML=codes.map(c=>`<button type="button" data-v="${c}" aria-pressed="${S[key]===c}">${dn(c)}</button>`).join('');
+  });
+}
+function syncControls(){
+  const M=mode(), sw=S.action==='switch';
+  [['segAction','action'],['segKnown','known'],['segTxn','txn'],['segAcct','acct'],['segCutoff','cutoff'],['chipsModel','model'],['chipsDest','dest']]
+    .forEach(([id,k])=>$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===S[k])));
+  $('knownTargetBtn').textContent=sw?'วันลงทุนปลายทาง':'วันรับเงิน';
+  if($('dateIn').value!==S.date)$('dateIn').value=S.date;
+  $('modelLabel').textContent=sw?'โมเดลต้นทาง':'โมเดล';
+  $('qDest').hidden=!sw; $('qTxn').hidden=sw; $('qAcct').hidden=sw;
+  $('qCutoff').hidden=S.known!=='send';
+  $('dateLabel').textContent={forward:'วันที่ส่ง IC Request',reverse:'วันที่ต้องการรับเงิน (Settlement Date)',wealth:'วันที่ส่ง IC Request',wealthrev:'วันที่ต้องการลงทุนในโมเดลปลายทาง'}[M];
+}
+
+function render(){
+  syncControls();
+  renderTn();
+  const prob=dateProblem(), hint=$('dateHint');
+  const {min,max}=getRange();
+  if(prob){hint.textContent=prob;hint.className='hint bad';}
+  else{
+    const d=new Date(S.date+'T00:00:00'),ds=S.date;
+    let extra='';
+    if(isWeekend(d))extra='ตรงกับเสาร์-อาทิตย์';
+    else if(SETTINGS.thaiHolidays.includes(ds))extra='ตรงกับวันหยุดสถาบันการเงินไทย';
+    if(extra&&S.known==='send')extra+=' ระบบเลื่อนเป็นวันทำการถัดไปให้';
+    hint.textContent=extra||`เลือกได้ ${fmtShort(min)} ถึง ${max?fmtShort(max):'-'}`;
+    hint.className=extra?'hint bad':'hint';
+  }
+  if(prob||!S.model){
+    $('slip').innerHTML=`<div class="empty"><strong>ยังคำนวณไม่ได้</strong>${prob||'ยังไม่มีข้อมูลโมเดล'}</div>`;
+    $('actions').hidden=true;return;
+  }
+  const r=compute();
+  $('slip').innerHTML=answerHtml(r)+`<div class="body"><div>${timelineHtml(r)}${notesHtml(r)}</div><div>${calendarHtml(r)}</div></div>`+footHtml();
+  $('actions').hidden=false;
+}
+
+function answerHtml(r){
+  const D=dn(S.dest);
+  if(r.mode==='forward')return `<div class="answer"><p class="lead">ลูกค้าได้รับเงินเข้าบัญชี${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}</p><p class="big">${fmtThai(r.settle)}</p></div>`;
+  if(r.mode==='wealth')return `<div class="answer"><p class="lead">เงินเข้าลงทุนในโมเดล ${D}</p><p class="big">${fmtThai(r.invest)}</p></div>`;
+  return `<div class="answer"><p class="lead">ต้องส่ง IC Request ภายใน</p><p class="big">${fmtThai(r.ic)} <small>ก่อน 15:00</small></p><p class="alt">หรือ ${fmtThai(r.icAfter)} หลัง 15:00</p></div>`;
+}
+
+function step(cls,what,when,why){return `<li class="${cls}"><span class="dot"></span><div class="what">${what}</div><div class="when">${when}</div>${why?`<div class="why">${why}</div>`:''}</li>`;}
+function timelineHtml(r){
+  const A=SETTINGS.adj, src=dn(S.model), D=dn(S.dest);
+  const icWhen=r.icAfter?`${fmtThai(r.ic)} ก่อน 15:00<br><span style="font-weight:500;color:var(--ink-2)">หรือ ${fmtThai(r.icAfter)} หลัง 15:00</span>`:`${fmtThai(r.ic)} ${S.cutoff==='before'?'ก่อน':'หลัง'} 15:00`;
+  const cut=r.icAfter?`ก่อน 15:00 = +${A.before} วันทำการ, หลัง 15:00 = +${A.after} วันทำการ`:`+${S.cutoff==='before'?A.before:A.after} วันทำการ`;
+  let h='<ol class="timeline">';
+  h+=step('c-ic','ส่ง IC Request',icWhen,'');
+  h+=step('c-txn',`Transaction Date${S.action==='switch'?` (${src})`:''}`,fmtThai(r.txn),cut+' จากวันส่งคำสั่ง');
+  if(S.action==='sell'){
+    h+=step('c-settle','Settlement Date (เงินเข้าบัญชี)',fmtThai(r.settle),`T+${r.total} วันทำการ (${src}, ${S.txn==='reduce'?'ลดเงิน':'ปิดบัญชี'} เข้า${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'})`);
+  }else{
+    h+=step('c-settle',`Settlement Date (${src})`,fmtThai(r.settle),`T+${r.total} วันทำการ เงินเข้าบัญชี -2 ของโมเดล ${D}`);
+    h+=step('c-invest',`ลงทุนในโมเดล ${D}`,fmtThai(r.invest),'+1 วันทำการ (นับวันหยุดไทย)');
+  }
+  return h+'</ol>';
+}
+
+function notesHtml(r){
+  const n=[];
+  if(r.shifted)n.push(`<div class="note shift">วันที่เลือก (${fmtThai(r.input)}) เป็นวันหยุด ระบบเลื่อนเป็นวันทำการถัดไปให้</div>`);
+  if(r.intlFunds)n.push(`<div class="note intl">${fmtThai(r.invest)} บางกองทุนในโมเดล ${dn(S.dest)} หยุดทำการ${r.intlFunds.length?` (${r.intlFunds.join(', ')})`:''} อาจลงทุนได้วันถัดไป</div>`);
+  const end=SETTINGS.coverEnd;
+  if(end&&[r.ic,r.icAfter,r.txn,r.settle,r.invest].some(d=>d&&d>end))
+    n.push(`<div class="note cover">บางวันในผลลัพธ์เลยช่วงข้อมูลวันหยุดกองทุน (ถึง ${fmtShort(end)}) ผลอาจคลาดเคลื่อน</div>`);
+  return n.length?`<div class="notes">${n.join('')}</div>`:'';
+}
+
+function calendarHtml(r){
+  const thai=new Set(SETTINGS.thaiHolidays), intl=new Set(SETTINGS.modelHolidays[S.model]||[]), fm=SETTINGS.holidayFunds[S.model]||{};
+  const marks={};
+  const put=(d,c)=>{if(d)marks[toDateStr(d)]=c;};
+  put(r.icAfter,'m-ic2');put(r.ic,'m-ic');put(r.txn,'m-txn');put(r.settle,'m-settle');put(r.invest,'m-invest');
+  const all=[r.icAfter,r.ic,r.txn,r.settle,r.invest].filter(Boolean);
+  const first=new Date(Math.min(...all)), last=new Date(Math.max(...all));
+  const fs=toDateStr(first), ls=toDateStr(last);
+  let h='<div class="cals">';
+  let cur=new Date(first.getFullYear(),first.getMonth(),1);
+  const end=new Date(last.getFullYear(),last.getMonth(),1);
+  while(cur<=end){
+    const y=cur.getFullYear(),m=cur.getMonth(),so=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate();
+    h+=`<div class="cal"><h3>${TH_MON[m]} ${y+543}</h3><div class="g">`+['อา','จ','อ','พ','พฤ','ศ','ส'].map(x=>`<div class="dow">${x}</div>`).join('');
+    for(let i=0;i<so;i++)h+='<div></div>';
+    for(let day=1;day<=dim;day++){
+      const dt=new Date(y,m,day),ds=toDateStr(dt);let c='d',tip='';
+      if(ds>=fs&&ds<=ls)c+=' path';
+      if(isWeekend(dt))c+=' wk';
+      if(thai.has(ds)){c+=' th';tip='วันหยุดสถาบันการเงินไทย';}
+      else if(intl.has(ds)){c+=' intl';tip='กองทุนที่หยุด: '+(fm[ds]||[]).join(', ');}
+      if(marks[ds])c+=' '+marks[ds];
+      h+=`<div class="${c}"${tip?` title="${tip}"`:''}>${day}</div>`;
+    }
+    h+='</div></div>';
+    cur.setMonth(cur.getMonth()+1);
+  }
+  h+='</div><div class="legend">';
+  h+=`<span><b style="background:var(--ic)"></b>ส่ง IC Request</span>`;
+  if(r.icAfter)h+=`<span><b style="box-shadow:inset 0 0 0 2px var(--ic)"></b>หลัง 15:00</span>`;
+  h+=`<span><b style="background:var(--txn)"></b>Transaction</span><span><b style="background:var(--settle)"></b>Settlement</span>`;
+  if(r.invest)h+=`<span><b style="background:var(--invest)"></b>ลงทุนโมเดลปลายทาง</span>`;
+  h+=`<span><b style="background:var(--th-bg)"></b>วันหยุดไทย</span><span><b style="background:var(--intl-bg)"></b>วันหยุดกองทุนต่างประเทศ (ชี้เพื่อดูชื่อ)</span><span><b style="background:var(--wk)"></b>เสาร์-อาทิตย์</span></div>`;
+  return h;
+}
+
+function footHtml(){
+  const rd=SETTINGS.refDate?' ณ '+fmtShort(new Date(SETTINGS.refDate+'T00:00:00')):'';
+  return `<div class="foot"><strong>หมายเหตุ</strong><ul>
+    <li>อ้างอิง Settlement Date และวันหยุดกองทุน จากสัดส่วนกองทุนในแต่ละโมเดล${rd}</li>
+    <li>เป็นการประมาณการเบื้องต้น โดยใช้กองทุนที่มี Settlement Date สูงสุดในแต่ละโมเดล</li>
+    <li>ผลจริงอาจคลาดเคลื่อนจากการปรับสัดส่วนกองทุน หรือเงื่อนไขการข้ามวันหยุดต่างประเทศของแต่ละ บลจ.</li>
+    <li><b>ตรวจสอบวัน Settlement จริงได้ในระบบ FundConnext หลังส่งคำสั่งแล้ว</b></li></ul></div>`;
+}
+
+function renderTn(){
+  const A=SETTINGS.adj, sw=S.action==='switch';
+  const col=sw?0:{'collateral-reduce':0,'collateral-close':1,'ats-reduce':2,'ats-close':3}[`${S.acct}-${S.txn}`];
+  let h='<table class="tn-table"><tr><th rowspan="2">โมเดล</th><th colspan="2">หลักประกัน (-2)</th><th colspan="2">ATS</th></tr><tr><th>ลดเงิน</th><th>ปิดบัญชี</th><th>ลดเงิน</th><th>ปิดบัญชี</th></tr>';
+  Object.keys(SETTINGS.models).forEach(m=>{
+    const tn=SETTINGS.models[m], on=m===S.model;
+    const cells=[tn+A.reduce+A.collateral,tn+A.close+A.collateral,tn+A.reduce+A.ats,tn+A.close+A.ats];
+    h+=`<tr class="${on?'on':''}"><td>${dn(m)}</td>${cells.map((v,i)=>`<td class="${on&&i===col?'hit':''}">T+${v}</td>`).join('')}</tr>`;
+  });
+  $('tnTable').innerHTML=h+'</table><p class="hint">T = Transaction Date</p>';
+}
+
+// ── Events ───────────────────────────────────────────────────────────────
+[['segAction','action'],['segKnown','known'],['segTxn','txn'],['segAcct','acct'],['segCutoff','cutoff'],['chipsModel','model'],['chipsDest','dest']]
+  .forEach(([id,k])=>$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S[k]=b.dataset.v;render();}));
+$('dateIn').addEventListener('input',e=>{S.date=e.target.value;render();});
+
+$('saveBtn').addEventListener('click',async()=>{
+  const b=$('saveBtn');b.disabled=true;b.textContent='กำลังบันทึก…';
+  try{
+    const c=await html2canvas($('slip'),{backgroundColor:'#ffffff',scale:2});
+    const a=document.createElement('a');a.download='settlement_'+S.date+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+    b.textContent='บันทึกแล้ว';
+  }catch(e){b.textContent='บันทึกไม่สำเร็จ';}
+  setTimeout(()=>{b.disabled=false;b.textContent='บันทึกเป็นรูป';},1800);
+});
+
+applyData(FALLBACK_DATA,true);
+if(location.protocol!=='file:')loadData();
+</script>
+</body>
+</html>

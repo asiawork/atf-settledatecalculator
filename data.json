@@ -1,0 +1,842 @@
+{
+ "updated": "2026-10-15",
+ "source": "portfolioweight.xlsx",
+ "coverStart": "2026-10-01",
+ "coverEnd": "2026-12-31",
+ "adj": {
+  "before": 1,
+  "after": 2,
+  "reduce": 0,
+  "close": 1,
+  "collateral": 0,
+  "ats": 1
+ },
+ "thaiHolidays": [
+  "2026-06-01",
+  "2026-06-03",
+  "2026-07-28",
+  "2026-07-29",
+  "2026-08-12",
+  "2026-10-13",
+  "2026-10-16",
+  "2026-10-23",
+  "2026-12-07",
+  "2026-12-10",
+  "2026-12-31"
+ ],
+ "models": [
+  {
+   "code": "SP",
+   "name": "FIXEDSP",
+   "tn": 1,
+   "nFunds": 4,
+   "holidays": {}
+  },
+  {
+   "code": "TDP",
+   "name": "FIXEDTDP",
+   "tn": 2,
+   "nFunds": 7,
+   "holidays": {}
+  },
+  {
+   "code": "DIP",
+   "name": "FIXEDDP",
+   "tn": 3,
+   "nFunds": 8,
+   "holidays": {
+    "2026-10-12": [
+     "UGIS-N"
+    ],
+    "2026-11-01": [
+     "UGIS-N"
+    ],
+    "2026-11-11": [
+     "UGIS-N"
+    ],
+    "2026-11-26": [
+     "UGIS-N"
+    ],
+    "2026-11-27": [
+     "UGIS-N"
+    ],
+    "2026-12-24": [
+     "UGIS-N"
+    ],
+    "2026-12-25": [
+     "UGIS-N"
+    ],
+    "2026-12-28": [
+     "UGIS-N"
+    ]
+   }
+  },
+  {
+   "code": "CAA",
+   "name": "CAA",
+   "tn": 5,
+   "nFunds": 14,
+   "holidays": {
+    "2026-10-01": [
+     "UOBSGC"
+    ],
+    "2026-10-02": [
+     "UOBSGC"
+    ],
+    "2026-10-03": [
+     "UOBSGC"
+    ],
+    "2026-10-04": [
+     "UOBSGC"
+    ],
+    "2026-10-05": [
+     "UOBSGC"
+    ],
+    "2026-10-06": [
+     "UOBSGC"
+    ],
+    "2026-10-07": [
+     "UOBSGC"
+    ],
+    "2026-10-12": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-13": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-16": [
+     "BCAP-USL",
+     "BCAP-USND100",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-19": [
+     "UOBSGC"
+    ],
+    "2026-10-23": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-08": [
+     "UOBSGC"
+    ],
+    "2026-11-09": [
+     "UOBSGC",
+     "SCBGOLD"
+    ],
+    "2026-11-11": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-25": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-11-26": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-27": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-12-07": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-10": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-23": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-12-24": [
+     "BCAP-USL",
+     "BCAP-USND100",
+     "UOBSGC",
+     "SCBGOLD"
+    ],
+    "2026-12-25": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "UOBSGC",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-30": [
+     "BCAP-USL"
+    ],
+    "2026-12-31": [
+     "BCAP-USL",
+     "ES-US500",
+     "UOBSGC",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ]
+   }
+  },
+  {
+   "code": "MAA",
+   "name": "MAA",
+   "tn": 5,
+   "nFunds": 14,
+   "holidays": {
+    "2026-10-01": [
+     "UOBSGC"
+    ],
+    "2026-10-02": [
+     "UOBSGC"
+    ],
+    "2026-10-03": [
+     "UOBSGC"
+    ],
+    "2026-10-04": [
+     "UOBSGC"
+    ],
+    "2026-10-05": [
+     "UOBSGC"
+    ],
+    "2026-10-06": [
+     "UOBSGC"
+    ],
+    "2026-10-07": [
+     "UOBSGC"
+    ],
+    "2026-10-12": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-13": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-16": [
+     "BCAP-USL",
+     "BCAP-USND100",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-19": [
+     "UOBSGC"
+    ],
+    "2026-10-23": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-03": [
+     "K-JPX-A(A)"
+    ],
+    "2026-11-08": [
+     "UOBSGC"
+    ],
+    "2026-11-09": [
+     "UOBSGC",
+     "SCBGOLD"
+    ],
+    "2026-11-11": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-23": [
+     "K-JPX-A(A)"
+    ],
+    "2026-11-25": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-11-26": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-27": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-12-07": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-10": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-23": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-12-24": [
+     "BCAP-USL",
+     "BCAP-USND100",
+     "UOBSGC",
+     "SCBGOLD"
+    ],
+    "2026-12-25": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "UOBSGC",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-30": [
+     "BCAP-USL"
+    ],
+    "2026-12-31": [
+     "BCAP-USL",
+     "ES-US500",
+     "UOBSGC",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ]
+   }
+  },
+  {
+   "code": "AAA",
+   "name": "AAA",
+   "tn": 5,
+   "nFunds": 13,
+   "holidays": {
+    "2026-10-01": [
+     "UOBSGC"
+    ],
+    "2026-10-02": [
+     "UOBSGC"
+    ],
+    "2026-10-03": [
+     "UOBSGC"
+    ],
+    "2026-10-04": [
+     "UOBSGC"
+    ],
+    "2026-10-05": [
+     "UOBSGC"
+    ],
+    "2026-10-06": [
+     "UOBSGC"
+    ],
+    "2026-10-07": [
+     "UOBSGC"
+    ],
+    "2026-10-12": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-13": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-16": [
+     "BCAP-USL",
+     "BCAP-USND100",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-10-19": [
+     "UOBSGC"
+    ],
+    "2026-10-23": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-03": [
+     "K-JPX-A(A)"
+    ],
+    "2026-11-08": [
+     "UOBSGC"
+    ],
+    "2026-11-09": [
+     "UOBSGC",
+     "SCBGOLD"
+    ],
+    "2026-11-11": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-23": [
+     "K-JPX-A(A)"
+    ],
+    "2026-11-25": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-11-26": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-11-27": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-12-07": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-10": [
+     "ES-US500",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-23": [
+     "BCAP-USL",
+     "BCAP-USND100"
+    ],
+    "2026-12-24": [
+     "BCAP-USL",
+     "BCAP-USND100",
+     "UOBSGC",
+     "SCBGOLD"
+    ],
+    "2026-12-25": [
+     "BCAP-USL",
+     "K-SEMQ",
+     "ES-US500",
+     "BCAP-USND100",
+     "K-USXNDQ-A(A)",
+     "K-JPX-A(A)",
+     "UOBSGC",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ],
+    "2026-12-30": [
+     "BCAP-USL"
+    ],
+    "2026-12-31": [
+     "BCAP-USL",
+     "ES-US500",
+     "UOBSGC",
+     "SCBKEQTG",
+     "SCBGOLD",
+     "MSILVER"
+    ]
+   }
+  },
+  {
+   "code": "DAA",
+   "name": "DAA",
+   "tn": 4,
+   "nFunds": 11,
+   "holidays": {
+    "2026-10-01": [
+     "K-CHINA-A(D)"
+    ],
+    "2026-10-12": [
+     "BCAP-USL",
+     "LHEME-D",
+     "SCBS&P500",
+     "K-USXNDQ-A(D)",
+     "SCBNK225D",
+     "K-CHINA-A(D)",
+     "SCBKEQTG",
+     "K-GOLD-A(D)",
+     "MSILVER"
+    ],
+    "2026-10-13": [
+     "LHEME-D",
+     "SCBS&P500",
+     "SCBNK225D",
+     "SCBKEQTG",
+     "MSILVER"
+    ],
+    "2026-10-16": [
+     "BCAP-USL",
+     "LHEME-D",
+     "SCBS&P500",
+     "SCBNK225D",
+     "SCBKEQTG",
+     "MSILVER"
+    ],
+    "2026-10-19": [
+     "K-CHINA-A(D)"
+    ],
+    "2026-10-23": [
+     "LHEME-D",
+     "SCBS&P500",
+     "SCBNK225D",
+     "SCBKEQTG",
+     "MSILVER"
+    ],
+    "2026-11-03": [
+     "SCBNK225D"
+    ],
+    "2026-11-09": [
+     "K-GOLD-A(D)"
+    ],
+    "2026-11-11": [
+     "BCAP-USL",
+     "LHEME-D",
+     "SCBS&P500",
+     "K-USXNDQ-A(D)",
+     "K-CHINA-A(D)",
+     "SCBKEQTG",
+     "K-GOLD-A(D)",
+     "MSILVER"
+    ],
+    "2026-11-23": [
+     "SCBNK225D"
+    ],
+    "2026-11-25": [
+     "BCAP-USL"
+    ],
+    "2026-11-26": [
+     "BCAP-USL",
+     "LHEME-D",
+     "SCBS&P500",
+     "K-USXNDQ-A(D)",
+     "K-CHINA-A(D)",
+     "SCBKEQTG",
+     "K-GOLD-A(D)",
+     "MSILVER"
+    ],
+    "2026-11-27": [
+     "BCAP-USL",
+     "LHEME-D"
+    ],
+    "2026-12-07": [
+     "LHEME-D",
+     "SCBS&P500",
+     "SCBNK225D",
+     "SCBKEQTG",
+     "MSILVER"
+    ],
+    "2026-12-10": [
+     "LHEME-D",
+     "SCBS&P500",
+     "SCBNK225D",
+     "SCBKEQTG",
+     "MSILVER"
+    ],
+    "2026-12-23": [
+     "BCAP-USL"
+    ],
+    "2026-12-24": [
+     "BCAP-USL",
+     "LHEME-D",
+     "K-CHINA-A(D)"
+    ],
+    "2026-12-25": [
+     "BCAP-USL",
+     "LHEME-D",
+     "SCBS&P500",
+     "K-USXNDQ-A(D)",
+     "K-CHINA-A(D)",
+     "SCBKEQTG",
+     "K-GOLD-A(D)",
+     "MSILVER"
+    ],
+    "2026-12-30": [
+     "BCAP-USL"
+    ],
+    "2026-12-31": [
+     "BCAP-USL",
+     "LHEME-D",
+     "SCBS&P500",
+     "SCBNK225D",
+     "SCBKEQTG",
+     "MSILVER"
+    ]
+   }
+  },
+  {
+   "code": "TCT",
+   "name": "TCT",
+   "tn": 5,
+   "nFunds": 15,
+   "holidays": {
+    "2026-10-01": [
+     "UOBSGC"
+    ],
+    "2026-10-02": [
+     "UOBSGC"
+    ],
+    "2026-10-03": [
+     "UOBSGC"
+    ],
+    "2026-10-04": [
+     "UOBSGC"
+    ],
+    "2026-10-05": [
+     "UOBSGC"
+    ],
+    "2026-10-06": [
+     "UOBSGC"
+    ],
+    "2026-10-07": [
+     "UOBSGC"
+    ],
+    "2026-10-12": [
+     "SCBKEQTG",
+     "BCAP-USND100",
+     "SCBNK225",
+     "KKP TECH-H",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "KKP GHC-A",
+     "TLDEFENSE",
+     "LHSPACE-A"
+    ],
+    "2026-10-13": [
+     "SCBKEQTG",
+     "B-BHARATA",
+     "SCBNK225",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "LHSPACE-A"
+    ],
+    "2026-10-16": [
+     "SCBKEQTG",
+     "BCAP-USND100",
+     "B-BHARATA",
+     "SCBNK225",
+     "SCBS&P500A",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "LHSPACE-A"
+    ],
+    "2026-10-19": [
+     "UOBSGC"
+    ],
+    "2026-10-23": [
+     "SCBKEQTG",
+     "B-BHARATA",
+     "SCBNK225",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "LHSPACE-A"
+    ],
+    "2026-10-26": [
+     "B-BHARATA",
+     "ES-GTECH",
+     "KKP GHC-A",
+     "LHSPACE-A"
+    ],
+    "2026-11-03": [
+     "SCBNK225"
+    ],
+    "2026-11-08": [
+     "UOBSGC"
+    ],
+    "2026-11-09": [
+     "UOBSGC"
+    ],
+    "2026-11-11": [
+     "SCBKEQTG",
+     "BCAP-USND100",
+     "KKP TECH-H",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "KKP GHC-A",
+     "TLDEFENSE",
+     "LHSPACE-A"
+    ],
+    "2026-11-23": [
+     "SCBNK225"
+    ],
+    "2026-11-25": [
+     "BCAP-USND100"
+    ],
+    "2026-11-26": [
+     "SCBKEQTG",
+     "BCAP-USND100",
+     "KKP TECH-H",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "KKP GHC-A",
+     "TLDEFENSE",
+     "LHSPACE-A"
+    ],
+    "2026-11-27": [
+     "BCAP-USND100",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "KKP GHC-A",
+     "LHSPACE-A"
+    ],
+    "2026-12-07": [
+     "SCBKEQTG",
+     "B-BHARATA",
+     "SCBNK225",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "LHSPACE-A"
+    ],
+    "2026-12-10": [
+     "SCBKEQTG",
+     "B-BHARATA",
+     "SCBNK225",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "LHSPACE-A"
+    ],
+    "2026-12-23": [
+     "BCAP-USND100"
+    ],
+    "2026-12-24": [
+     "BCAP-USND100",
+     "ES-EG-A",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "KKP GHC-A",
+     "LHSPACE-A",
+     "UOBSGC"
+    ],
+    "2026-12-25": [
+     "SCBKEQTG",
+     "BCAP-USND100",
+     "B-BHARATA",
+     "KKP TECH-H",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "KKP GHC-A",
+     "TLDEFENSE",
+     "LHSPACE-A",
+     "UOBSGC"
+    ],
+    "2026-12-28": [
+     "B-BHARATA",
+     "ES-EG-A",
+     "ES-GTECH",
+     "KKP GHC-A",
+     "LHSPACE-A"
+    ],
+    "2026-12-29": [
+     "B-BHARATA",
+     "ES-GTECH",
+     "LHSPACE-A"
+    ],
+    "2026-12-31": [
+     "SCBKEQTG",
+     "B-BHARATA",
+     "SCBNK225",
+     "SCBS&P500A",
+     "ES-EG-A",
+     "ES-GTECH",
+     "LHNUKZ-A",
+     "LHQTUM-A",
+     "LHSPACE-A",
+     "UOBSGC"
+    ]
+   }
+  }
+ ]
+}
