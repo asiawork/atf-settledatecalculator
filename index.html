@@ -83,6 +83,7 @@ button,input,select{font:inherit;color:inherit;}
 .calc{display:grid;grid-template-columns:360px 1fr;gap:24px;align-items:start;}
 @media(max-width:950px){.calc{grid-template-columns:1fr;}}
 
+
 .rail{padding:6px 22px 22px;position:sticky;top:16px;counter-reset:step;}
 @media(max-width:950px){.rail{position:static;}}
 .blk{padding-top:18px;}
@@ -193,128 +194,87 @@ button,input,select{font:inherit;color:inherit;}
 .empty{padding:56px 28px;text-align:center;color:var(--ink-2);}
 .empty strong{display:block;color:var(--ink);font-size:18px;margin-bottom:4px;}
 
-/* ════ Compact: ให้หน้าคำนวณอยู่ในจอเดียว ════ */
-.titleline{display:flex;align-items:baseline;gap:4px 12px;flex-wrap:wrap;}
-.titleline .team{margin:0;}
-.subline{display:flex;gap:2px 14px;flex-wrap:wrap;align-items:center;margin-top:1px;}
-.opts.row{flex-direction:row;}
-.lrow{display:grid;grid-template-columns:74px 1fr;align-items:center;gap:8px;}
-.lrow + .lrow{margin-top:6px;}
-.lrow .sub-label{margin:0;}
-
-.opts.row .opt{flex:1;padding:7px 9px;gap:7px;}
-.opts.row .opt b{font-size:13.5px;}
-.opts.row .opt small{font-size:11.5px;line-height:1.35;}
-.opts.row .rd{width:15px;height:15px;}
-
-.top{padding:14px 24px 0;}
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px 24px;flex-wrap:wrap;}
-.top h1{font-size:21px;margin:0;}
-.top .sub{font-size:13px;margin:0;}
-.data-line{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink-3);margin:2px 0 0;}
-.data-line i{width:7px;height:7px;border-radius:50%;background:var(--s3);flex-shrink:0;}
-.data-line.fallback i{background:#D08700;}
-.data-line b{color:var(--ink-2);font-weight:600;}
-.tabs{margin-top:0;border-bottom:0;}
-.tabs button{padding:8px 14px;font-size:14.5px;}
-.top-rule{height:1px;background:var(--line);margin-top:0;}
-.page{padding:14px 24px 20px;}
-.calc{grid-template-columns:330px 1fr;gap:18px;}
-.rail{padding:2px 18px 16px;top:10px;}
-.blk{padding-top:10px;}
-.blk + .blk{margin-top:10px;}
-.blk-title{margin:0 0 8px;font-size:14px;}
-.seg button{padding:6px 6px;font-size:13.5px;}
-.opts{gap:6px;}
-.opt{padding:7px 10px;}
-.opt b{font-size:14px;}
-.chips button{padding:5px 2px;}
+/* ── v7: timeline แนวตั้งคู่ปฏิทิน (ระยะห่างเท่าเวอร์ชันก่อน) ── */
 .chips button:disabled{background:var(--soft);color:#B7C0CF;border-style:dashed;cursor:not-allowed;}
-.sub-label{margin:6px 0 4px;}
-.dt{display:grid;grid-template-columns:1.25fr 1fr;gap:10px;align-items:start;}
-.dt.one{grid-template-columns:1fr;}
-.date-in{padding:7px 10px;font-size:14.5px;}
-.hint{font-size:12px;}
-
-.answer{padding:12px 22px 10px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
-.answer .big{font-size:26px;}
-.answer .big small{font-size:17px;}
-.answer .alt{font-size:15px;margin-top:0;}
-.answer .btn{flex-shrink:0;padding:7px 14px;font-size:13.5px;}
-.notes{padding:10px 22px 0;}
-.note{padding:7px 11px;font-size:13px;}
-.res-body{display:grid;grid-template-columns:270px 1fr;gap:22px;padding:14px 22px 14px;align-items:start;}
-@media(max-width:1100px){.res-body{grid-template-columns:1fr;}}
-
-/* timeline แนวตั้ง */
+.answer{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;}
+.answer .btn{flex-shrink:0;}
+.res-body{display:grid;grid-template-columns:280px 1fr;gap:28px;padding:22px 28px 24px;align-items:start;}
 .tl{display:block;padding:0;}
-.tl li{padding:0 0 10px 40px;}
+.tl li{padding:0 0 20px 44px;}
 .tl li:last-child{padding-bottom:0;}
-.tl .num{position:absolute;left:0;top:0;width:26px;height:26px;font-size:13px;}
-.tl li:not(:last-child)::after{top:28px;bottom:2px;left:12px;right:auto;width:2px;height:auto;}
-.tl .what{margin-top:1px;font-size:12.5px;}
-.tl .when{font-size:15px;}
-.tl .sub{font-size:12.5px;}
-.tl .tl-note{font-size:12.5px;padding:7px 9px;margin-top:6px;}
-.tl .tl-note b{display:block;font-weight:600;}
-.info{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--intl);color:#fff;font-size:10.5px;font-weight:700;font-style:normal;margin-left:4px;cursor:pointer;vertical-align:1px;}
-
+.tl .num{position:absolute;left:0;top:0;}
+.tl li:not(:last-child)::after{top:32px;bottom:4px;left:13px;right:auto;width:2px;height:auto;}
+.tl .what{margin-top:2px;}
+.tl .tl-note{padding:8px 10px;margin-top:8px;}
+.tl .tl-note b{display:block;font-weight:600;margin-bottom:2px;}
+.info{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:var(--intl);color:#fff;font-size:11px;font-weight:700;font-style:normal;margin-left:5px;cursor:pointer;vertical-align:1px;}
 .cal-area{padding:0;}
-.cal-head{margin-bottom:8px;}
-.cal-head h3{font-size:14px;}
-.key{font-size:12px;gap:4px 12px;}
-.cal .d{height:35px;font-size:13px;}
-.cal .g{gap:3px;}
-
-.foot{padding:10px 22px 12px;font-size:12px;line-height:1.5;}
-.foot ul{margin:2px 0 0;}
-@media(min-width:1100px){.foot ul{columns:2;column-gap:28px;}.foot li{break-inside:avoid;}}
-@media(max-width:760px){.answer{padding:16px 18px;flex-direction:column;}.res-body{padding:14px 18px;}.foot{padding:12px 18px;}.top{padding:14px 16px 0;}.page{padding:12px 16px 24px;}}
-/* final tightening */
-.top{padding-top:10px;}
-.tabs button{padding:6px 14px;}
-.page{padding-top:10px;}
-.blk-title{margin-bottom:6px;}
-.seg{padding:2px;}
-.seg button{padding:5px 6px;}
-.chips{gap:5px;}
-.chips button{padding:4px 2px;}
-.rail{padding-bottom:12px;}
-.date-in{padding:5px 10px;}
-.blk{padding-top:9px;}
-.blk + .blk{margin-top:9px;}
-.opts.row .opt{padding:6px 8px;}
-.sub-label{margin:4px 0 3px;}
-.calc{grid-template-columns:372px 1fr;}
-.seg button{white-space:nowrap;font-size:13px;padding:5px 4px;}
-.lrow{grid-template-columns:62px 1fr;}
-.dt{grid-template-columns:1fr 1fr;}
-.opts.row .opt b{font-size:13px;}
-.cal .d{height:32px;}
-.cal-head{flex-direction:column;align-items:flex-start;gap:4px;}
-.key{font-size:11.5px;gap:2px 10px;}
-.foot{font-size:11.5px;padding:8px 22px 10px;line-height:1.45;}
-.answer .alt{font-size:14px;}
-.tl .tl-note{line-height:1.45;}
-@media(max-width:950px){.calc{grid-template-columns:1fr;}.res-body{grid-template-columns:1fr;}}
-@media(max-width:420px){.seg button{font-size:12.5px;}.opts.row{flex-direction:column;}}
+.cal-head{flex-direction:column;align-items:flex-start;gap:6px;}
+.cal{max-width:none;}
+@media(max-width:1100px){.res-body{grid-template-columns:1fr;}}
+/* ระยะห่างพอดี ไม่แน่นเกิน */
+.top{padding-top:18px;}
+.tabs{margin-top:12px;}
+.page{padding-top:16px;}
+.calc{grid-template-columns:360px 1fr;}
+.blk{padding-top:14px;}
+.blk + .blk{margin-top:14px;}
+.dt{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end;}
+.dt.one{grid-template-columns:1fr;}
+.dt .sub-label{margin-top:0;}
+.seg button{white-space:nowrap;}
+.answer{padding:20px 28px 16px;}
+.foot{padding:14px 28px 16px;}
+@media(min-width:1100px){.foot ul{columns:2;column-gap:32px;}.foot li{break-inside:avoid;}}
+@media(max-width:950px){.calc{grid-template-columns:1fr;}}
+@media(max-width:760px){.answer{flex-direction:column;padding:20px;}.res-body{padding:18px 20px 20px;}}
+/* ── late overrides ── */
+#dtRow>*{min-width:0;}
+#segCutoff button{padding:8px 4px;font-size:13.5px;}
+.date-in{min-width:0;}
+.sel{width:100%;padding:9px 34px 9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%234A5872' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;appearance:none;-webkit-appearance:none;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;}
+.sel:hover{border-color:var(--ink-3);}
+.sel.dest{border-color:var(--s4);color:var(--s4);}
+.mrow{display:grid;grid-template-columns:1fr;gap:8px;align-items:end;}
+.mrow.two2{grid-template-columns:1fr 1fr;}
+.mrow.two{grid-template-columns:1fr auto 1fr;}
+.mrow>div{min-width:0;}
+.mrow .arrow{font-size:18px;color:var(--ink-3);padding-bottom:8px;}
+/* ผลลัพธ์ค้างอยู่บนจอ เวลาเลื่อนดูฟอร์ม */
+.rail{position:static;}
+@media(min-width:951px){#resultCol{position:sticky;top:16px;}}
+@media(min-width:951px){.rail{position:static;}}
+.title-row{align-items:flex-end;}
+.head-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.head-right .tabs{margin:0;border-bottom:0;}
+.head-right .tabs button{padding:6px 14px;}
+.head-rule{height:1px;background:var(--line);}
+.page{padding-bottom:24px;}
+@media(max-width:900px){.head-right{align-items:stretch;width:100%;}}
+.sel{padding-right:30px;background-position:right 10px center;font-size:14.5px;}
+#dtRow{align-items:start;gap:10px;}
+#dtRow .sub-label{margin-top:0;}
+#segCutoff button{padding:8px 2px;font-size:13px;}
 </style>
 </head>
 <body>
 
 <header class="top">
-  <div class="head">
+  <div class="title-row">
     <div>
-      <div class="titleline"><h1>Auto Top Funds: Settlement Date Calculator</h1><p class="team">BLS Mutual Fund</p></div>
-      <div class="subline"><p class="sub">เครื่องมือคำนวณวันรับเงิน วันส่งคำสั่ง และวันลงทุนโมเดลปลายทาง</p>
-      <p class="data-line" id="dataPill" style="margin:0;"><i></i><span id="dataText">กำลังโหลดข้อมูล</span></p></div>
+      <p class="team">BLS Mutual Fund</p>
+      <h1>Auto Top Funds: Settlement Date Calculator</h1>
+      <p class="sub">เครื่องมือคำนวณวันรับเงิน วันส่งคำสั่ง และวันลงทุนโมเดลปลายทาง</p>
     </div>
-  <nav class="tabs" role="tablist">
-    <button type="button" role="tab" id="tabCalc" aria-selected="true" aria-controls="pageCalc">คำนวณวัน</button>
-    <button type="button" role="tab" id="tabOv" aria-selected="false" aria-controls="pageOv">ตาราง Settlement Date และวันหยุด</button>
-  </nav>
+    <div class="head-right">
+      <div class="data-pill" id="dataPill"><i></i><span id="dataText">กำลังโหลดข้อมูล</span></div>
+      <nav class="tabs" role="tablist">
+        <button type="button" role="tab" id="tabCalc" aria-selected="true" aria-controls="pageCalc">คำนวณวัน</button>
+        <button type="button" role="tab" id="tabOv" aria-selected="false" aria-controls="pageOv">ตาราง Settlement Date และวันหยุด</button>
+      </nav>
+    </div>
   </div>
-  <div class="top-rule"></div>
+  <div class="head-rule"></div>
 </header>
 
 <!-- ═════════ แท็บ 1: ภาพรวม ═════════ -->
@@ -346,13 +306,13 @@ button,input,select{font:inherit;color:inherit;}
         <p class="blk-title">ประเภทรายการ</p>
         <div class="seg" id="segAction">
           <button type="button" data-v="sell" aria-pressed="true">รายการขาย</button>
-          <button type="button" data-v="switch" aria-pressed="false">สับเปลี่ยนโมเดล <span style="font-size:11.5px;font-weight:400;">(Wealth Plan)</span></button>
+          <button type="button" data-v="switch" aria-pressed="false">สับเปลี่ยนโมเดล<br><span style="font-size:11.5px;font-weight:400;">Wealth Plan</span></button>
         </div>
       </div>
 
       <div class="blk">
         <p class="blk-title">ต้องการคำนวณ</p>
-        <div class="opts row" id="optKnown">
+        <div class="opts" id="optKnown">
           <button type="button" class="opt" data-v="send" aria-pressed="true"><span class="rd"></span><span><b id="optSendT">คำนวณวันรับเงิน</b><small id="optSendS">รู้วันส่ง IC Request</small></span></button>
           <button type="button" class="opt" data-v="target" aria-pressed="false"><span class="rd"></span><span><b>คำนวณวันส่ง IC Request</b><small id="optTargetS">รู้วันรับเงิน</small></span></button>
         </div>
@@ -360,22 +320,19 @@ button,input,select{font:inherit;color:inherit;}
 
       <div class="blk">
         <p class="blk-title" id="modelTitle">โมเดล</p>
-        <span class="sub-label" id="srcLabel" hidden>โมเดลต้นทาง</span>
-        <div class="chips" id="chipsModel"></div>
-        <div id="destWrap" hidden>
-          <span class="sub-label" style="margin-top:10px;">โมเดลปลายทาง</span>
-          <div class="chips dest" id="chipsDest"></div>
+        <div class="mrow" id="mrow">
+          <div><span class="sub-label" id="srcLabel" hidden>ต้นทาง</span><select id="selModel" class="sel" aria-label="โมเดล"></select></div>
+          <span class="arrow" id="mArrow" hidden>→</span>
+          <div id="destWrap" hidden><span class="sub-label">ปลายทาง</span><select id="selDest" class="sel dest" aria-label="โมเดลปลายทาง"></select></div>
         </div>
       </div>
 
       <div class="blk" id="blkDetail">
         <p class="blk-title" id="detailTitle">รายละเอียดการขาย</p>
-        <div class="lrow"><span class="sub-label">ประเภท</span><div class="seg" id="segTxn"></div></div>
-        <div class="lrow" id="acctWrap"><span class="sub-label">รับเงินเข้า</span>
-          <div class="seg" id="segAcct">
-            <button type="button" data-v="collateral" aria-pressed="true">หลักประกัน (-2)</button>
-            <button type="button" data-v="ats" aria-pressed="false">ATS</button>
-          </div>
+        <div class="mrow two2" id="detRow">
+          <div><label class="sub-label" for="selTxn">ประเภท</label><select id="selTxn" class="sel"></select></div>
+          <div id="acctWrap"><label class="sub-label" for="selAcct">รับเงินเข้า</label>
+            <select id="selAcct" class="sel"><option value="collateral">หลักประกัน (-2)</option><option value="ats">ATS</option></select></div>
         </div>
       </div>
 
@@ -398,7 +355,7 @@ button,input,select{font:inherit;color:inherit;}
       </div>
     </section>
 
-    <section aria-live="polite">
+    <section aria-live="polite" id="resultCol">
       <div class="card" id="slip"></div>
     </section>
   </div>
@@ -448,7 +405,7 @@ function applyData(d,isFallback){
   $('dataPill').classList.toggle('fallback',!!isFallback);
   const ref=SETTINGS.refDate?`ข้อมูล ณ เดือน ${fmtMonth(new Date(SETTINGS.refDate+'T00:00:00'))}`:'ข้อมูล';
   const cov=SETTINGS.coverEnd?` (แสดงข้อมูลวันหยุดกองทุนถึงเดือน ${fmtMonth(SETTINGS.coverEnd)})`:'';
-  $('dataText').innerHTML=`<b>${isFallback?'[ข้อมูลสำรอง] ':''}${ref}</b> ${cov.trim()}`;
+  $('dataText').innerHTML=`<b>${isFallback?'[ข้อมูลสำรอง] ':''}${ref}</b>${cov.trim()}`;
   renderChips();clampDate();renderOverview();render();
 }
 async function loadData(){
@@ -602,8 +559,9 @@ function nextDest(){
 function renderChips(){
   const codes=Object.keys(SETTINGS.models);
   nextDest();
-  $('chipsModel').innerHTML=codes.map(c=>`<button type="button" data-v="${c}" aria-pressed="${S.model===c}">${dn(c)}</button>`).join('');
-  $('chipsDest').innerHTML=codes.map(c=>`<button type="button" data-v="${c}" aria-pressed="${S.dest===c}"${c===S.model?' disabled title="เป็นโมเดลต้นทางอยู่"':''}>${dn(c)}</button>`).join('');
+  $('selModel').innerHTML=codes.map(c=>`<option value="${c}">${dn(c)}</option>`).join('');
+  $('selDest').innerHTML=codes.map(c=>`<option value="${c}"${c===S.model?' disabled':''}>${dn(c)}${c===S.model?' (ต้นทาง)':''}</option>`).join('');
+  $('selModel').value=S.model;$('selDest').value=S.dest;
 }
 function syncControls(){
   const sw=S.action==='switch',sp=isSP(S.model);
@@ -612,19 +570,22 @@ function syncControls(){
   // ปุ่มประเภทรายการ
   const txnOpts=sw?(sp?['reduce','reduceAll']:[]):(sp?['reduce','reduceAll','close']:['reduce','close']);
   const curT=sw?S.swTxn:S.txn;
-  $('segTxn').innerHTML=txnOpts.map(v=>`<button type="button" data-v="${v}" aria-pressed="${v===curT}">${TXN_LABEL[v]}</button>`).join('');
+  $('selTxn').innerHTML=txnOpts.map(v=>`<option value="${v}">${TXN_LABEL[v]}</option>`).join('');
+  $('selTxn').value=curT; $('selAcct').value=S.acct;
+  $('detRow').classList.toggle('two2',!sw);
   $('blkDetail').hidden=sw&&!sp;
   $('acctWrap').hidden=sw;
   $('detailTitle').textContent=sw?'รายละเอียดการสับเปลี่ยน':'รายละเอียดการขาย';
 
-  [['segAction','action'],['optKnown','known'],['segAcct','acct'],['segCutoff','cutoff'],['chipsModel','model'],['chipsDest','dest']]
+  [['segAction','action'],['optKnown','known'],['segCutoff','cutoff']]
     .forEach(([id,k])=>$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===S[k])));
 
-  $('optSendT').textContent=sw?'คำนวณวันลงทุนปลายทาง':'คำนวณวันรับเงิน';
+  $('optSendT').textContent=sw?'คำนวณวันลงทุนโมเดลปลายทาง':'คำนวณวันรับเงิน';
   $('optSendS').textContent='รู้วันส่ง IC Request';
-  $('optTargetS').textContent=sw?'รู้วันลงทุนปลายทาง':'รู้วันรับเงิน';
+  $('optTargetS').textContent=sw?'รู้วันลงทุนโมเดลปลายทาง':'รู้วันรับเงิน';
   $('modelTitle').textContent=sw?'โมเดลต้นทาง → ปลายทาง':'โมเดล';
-  $('srcLabel').hidden=!sw; $('destWrap').hidden=!sw;
+  $('srcLabel').hidden=!sw; $('destWrap').hidden=!sw; $('mArrow').hidden=!sw;
+  $('mrow').classList.toggle('two',sw);
   $('cutoffWrap').hidden=S.known!=='send';
   $('dtRow').classList.toggle('one',S.known!=='send');
   $('dateTitle').textContent=S.known==='send'?'วันที่และเวลา':'วันที่';
@@ -638,7 +599,7 @@ let LAST=null;
 function render(){
   renderChips();
   syncControls();
-  const prob=dateProblem(),hint=$('dateHint'),{max}=getRange();
+  const prob=dateProblem(),hint=$('dateHint'),{min,max}=getRange();
   if(prob){hint.textContent=prob;hint.className='hint bad';}
   else{
     const d=new Date(S.date+'T00:00:00');let extra='';
@@ -780,10 +741,13 @@ $('ovMonth').addEventListener('change',renderOvHol);
 $('ovModel').addEventListener('change',renderOvHol);
 
 // ── Events ───────────────────────────────────────────────────────────────
-[['segAction','action'],['optKnown','known'],['segAcct','acct'],['segCutoff','cutoff'],['chipsModel','model'],['chipsDest','dest']]
+[['segAction','action'],['optKnown','known'],['segCutoff','cutoff']]
   .forEach(([id,k])=>$(id).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S[k]=b.dataset.v;render();}));
-$('segTxn').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(S.action==='sell')S.txn=b.dataset.v;else S.swTxn=b.dataset.v;render();});
+$('selTxn').addEventListener('change',e=>{if(S.action==='sell')S.txn=e.target.value;else S.swTxn=e.target.value;render();});
+$('selAcct').addEventListener('change',e=>{S.acct=e.target.value;render();});
 $('dateIn').addEventListener('input',e=>{S.date=e.target.value;render();});
+$('selModel').addEventListener('change',e=>{S.model=e.target.value;render();});
+$('selDest').addEventListener('change',e=>{S.dest=e.target.value;render();});
 
 applyData(FALLBACK_DATA,true);
 if(location.protocol!=='file:')loadData();
