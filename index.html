@@ -426,6 +426,18 @@ function subtractBusinessDays(start,days,set){let d=new Date(start),s=0;while(s<
 function buildCombined(model){const s=new Set(SETTINGS.thaiHolidays);(SETTINGS.modelHolidays[model]||[]).forEach(d=>s.add(d));return s;}
 function shiftToBusinessDay(d,thaiSet){const x=new Date(d);while(isWeekend(x)||thaiSet.has(toDateStr(x)))x.setDate(x.getDate()+1);return x;}
 
+// วันส่ง IC Request ย้อนจาก Transaction Date:
+// เป็นวันทำการไทยวันล่าสุดที่ ถ้าส่งวันนั้นแล้ว (คำนวณไปข้างหน้าแบบเดิม) จะได้ Transaction Date ไม่เกินวันที่ต้องการ
+// → วันส่ง IC ไม่ต้องข้ามวันหยุดกองทุนต่างประเทศ เพราะไม่ได้เป็นวันทำรายการ
+function latestIC(txn,days,src,thaiSet){
+  let d=new Date(txn);
+  for(let i=0;i<60;i++){
+    d.setDate(d.getDate()-1);
+    if(isWeekend(d)||thaiSet.has(toDateStr(d)))continue;
+    if(addBusinessDays(d,days,src)<=txn)return new Date(d);
+  }
+  return subtractBusinessDays(txn,days,src);
+}
 function mode(){return S.action==='sell'?(S.known==='send'?'forward':'reverse'):(S.known==='send'?'wealth':'wealthrev');}
 const TXN_LABEL={reduce:'ลดเงิน',close:'ปิดบัญชี',reduceAll:'ลดเงินทั้งหมด'};
 function curTxn(){return S.action==='sell'?S.txn:(isSP(S.model)?S.swTxn:'reduce');}
@@ -451,8 +463,8 @@ function compute(){
     }else{
       r.settle=input;
       r.txn=subtractBusinessDays(r.settle,total,src);
-      r.ic=subtractBusinessDays(r.txn,A.before,src);
-      r.icAfter=subtractBusinessDays(r.txn,A.after,src);
+      r.ic=latestIC(r.txn,A.before,src,thaiSet);
+      r.icAfter=latestIC(r.txn,A.after,src,thaiSet);
     }
   }else{
     // สับเปลี่ยน = เข้าบัญชีหลักประกันเสมอ (FIXEDSP เลือก ลดเงินทั้งหมด ได้)
@@ -469,8 +481,8 @@ function compute(){
       r.shifted=toDateStr(r.invest)!==toDateStr(input);
       r.settle=subtractBusinessDays(r.invest,1,thaiSet);
       r.txn=subtractBusinessDays(r.settle,total,src);
-      r.ic=subtractBusinessDays(r.txn,A.before,src);
-      r.icAfter=subtractBusinessDays(r.txn,A.after,src);
+      r.ic=latestIC(r.txn,A.before,src,thaiSet);
+      r.icAfter=latestIC(r.txn,A.after,src,thaiSet);
     }
     const ds=toDateStr(r.invest);
     if(!thaiSet.has(ds)&&(SETTINGS.modelHolidays[S.dest]||[]).includes(ds))
