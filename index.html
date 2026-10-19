@@ -257,6 +257,13 @@ button,input,select{font:inherit;color:inherit;}
 #segCutoff button{padding:8px 2px;font-size:13px;}
 .cal .d .lbl{font-size:10px;font-weight:600;line-height:1.1;margin-top:2px;opacity:.95;white-space:nowrap;}
 .cal .d.mk{height:auto;min-height:46px;}
+/* แท็บแบบปุ่ม ให้รู้ว่ากดได้ */
+.head-right .tabs{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;}
+.head-right .tabs button{display:inline-flex;align-items:center;gap:7px;border:0;border-radius:9px;padding:8px 14px;font-size:14.5px;font-weight:600;color:var(--ink-2);background:transparent;cursor:pointer;margin:0;}
+.head-right .tabs button:hover{background:var(--soft);color:var(--ink);}
+.head-right .tabs button[aria-selected="true"],.head-right .tabs button[aria-selected="true"]:hover{background:var(--ink);color:#fff;}
+.head-rule{margin-top:12px;}
+@media(max-width:900px){.head-right .tabs{overflow:visible;}.head-right .tabs button{flex:1;justify-content:center;white-space:normal;text-align:center;font-size:13.5px;padding:8px 8px;line-height:1.3;}}
 </style>
 </head>
 <body>
@@ -271,8 +278,8 @@ button,input,select{font:inherit;color:inherit;}
     <div class="head-right">
       <div class="data-pill" id="dataPill"><i></i><span id="dataText">กำลังโหลดข้อมูล</span></div>
       <nav class="tabs" role="tablist">
-        <button type="button" role="tab" id="tabCalc" aria-selected="true" aria-controls="pageCalc">คำนวณวัน</button>
-        <button type="button" role="tab" id="tabOv" aria-selected="false" aria-controls="pageOv">ตาราง Settlement Date และวันหยุด</button>
+        <button type="button" role="tab" id="tabCalc" aria-selected="true" aria-controls="pageCalc"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18h8"/></svg>คำนวณวัน</button>
+        <button type="button" role="tab" id="tabOv" aria-selected="false" aria-controls="pageOv"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4M3 14h18M9 9v12M15 9v12"/></svg>ตาราง Settlement Date และวันหยุด</button>
       </nav>
     </div>
   </div>
@@ -426,17 +433,26 @@ function subtractBusinessDays(start,days,set){let d=new Date(start),s=0;while(s<
 function buildCombined(model){const s=new Set(SETTINGS.thaiHolidays);(SETTINGS.modelHolidays[model]||[]).forEach(d=>s.add(d));return s;}
 function shiftToBusinessDay(d,thaiSet){const x=new Date(d);while(isWeekend(x)||thaiSet.has(toDateStr(x)))x.setDate(x.getDate()+1);return x;}
 
-// วันส่ง IC Request ย้อนจาก Transaction Date:
-// เป็นวันทำการไทยวันล่าสุดที่ ถ้าส่งวันนั้นแล้ว (คำนวณไปข้างหน้าแบบเดิม) จะได้ Transaction Date ไม่เกินวันที่ต้องการ
-// → วันส่ง IC ไม่ต้องข้ามวันหยุดกองทุนต่างประเทศ เพราะไม่ได้เป็นวันทำรายการ
-function latestIC(txn,days,src,thaiSet){
-  let d=new Date(txn);
-  for(let i=0;i<60;i++){
+// ── กติกาช่วง IC Request → Transaction Date ─────────────────────────────
+// 1) นับเฉพาะวันทำการไทย (+1 ก่อน 15:00 / +2 หลัง 15:00)
+// 2) ถ้า Transaction Date ตรงวันหยุดของบางกองทุนในโมเดล: กองทุนที่ไม่ติดวันหยุดทำรายการวันนั้นก่อน
+//    กองทุนที่ติดวันหยุดทำรายการวันทำการถัดไปที่เปิด (txnLast)
+// 3) Settlement นับจากวันที่กองทุนสุดท้ายทำรายการ (txnLast) ข้ามทั้งวันหยุดไทยและวันหยุดกองทุน (แบบเดิม)
+function nextOpen(d,set){const x=new Date(d);while(isWeekend(x)||set.has(toDateStr(x)))x.setDate(x.getDate()+1);return x;}
+function txnFrom(ic,days,src,thaiSet){
+  const t=addBusinessDays(ic,days,thaiSet);
+  return {txn:t,txnLast:nextOpen(t,src)};
+}
+// วันส่ง IC Request ย้อนกลับ = วันทำการไทยวันล่าสุดที่ส่งแล้วยังได้ Settlement ไม่เกินวันที่ต้องการ
+function latestIC(target,days,total,src,thaiSet){
+  let d=new Date(target);
+  for(let i=0;i<90;i++){
     d.setDate(d.getDate()-1);
     if(isWeekend(d)||thaiSet.has(toDateStr(d)))continue;
-    if(addBusinessDays(d,days,src)<=txn)return new Date(d);
+    const t=txnFrom(d,days,src,thaiSet);
+    if(addBusinessDays(t.txnLast,total,src)<=target)return new Date(d);
   }
-  return subtractBusinessDays(txn,days,src);
+  return null;
 }
 function mode(){return S.action==='sell'?(S.known==='send'?'forward':'reverse'):(S.known==='send'?'wealth':'wealthrev');}
 const TXN_LABEL={reduce:'ลดเงิน',close:'ปิดบัญชี',reduceAll:'ลดเงินทั้งหมด'};
@@ -452,38 +468,30 @@ function compute(){
   const src=buildCombined(S.model);
   const cutoffDays=S.cutoff==='before'?A.before:A.after;
   const r={mode:M,input,txnType:curTxn()};
-  if(M==='forward'||M==='reverse'){
-    const total=SETTINGS.models[S.model]+txnAdj(S.txn)+(S.acct==='collateral'?A.collateral:A.ats);
-    r.total=total;
-    if(M==='forward'){
-      r.ic=shiftToBusinessDay(input,thaiSet);
-      r.shifted=toDateStr(r.ic)!==toDateStr(input);
-      r.txn=addBusinessDays(r.ic,cutoffDays,src);
-      r.settle=addBusinessDays(r.txn,total,src);
-    }else{
-      r.settle=input;
-      r.txn=subtractBusinessDays(r.settle,total,src);
-      r.ic=latestIC(r.txn,A.before,src,thaiSet);
-      r.icAfter=latestIC(r.txn,A.after,src,thaiSet);
-    }
+  const sw=M==='wealth'||M==='wealthrev';
+  // สับเปลี่ยน = เข้าบัญชีหลักประกันเสมอ (FIXEDSP เลือก ลดเงินทั้งหมด ได้)
+  const total=SETTINGS.models[S.model]+(sw?txnAdj(r.txnType)+A.collateral:txnAdj(S.txn)+(S.acct==='collateral'?A.collateral:A.ats));
+  r.total=total;
+  const setTxn=t=>{r.txn=t.txn;r.txnLast=t.txnLast;
+    if(toDateStr(t.txn)!==toDateStr(t.txnLast))r.txnFunds=(SETTINGS.holidayFunds[S.model]||{})[toDateStr(t.txn)]||[];};
+  if(M==='forward'||M==='wealth'){
+    r.ic=shiftToBusinessDay(input,thaiSet);
+    r.shifted=toDateStr(r.ic)!==toDateStr(input);
+    setTxn(txnFrom(r.ic,cutoffDays,src,thaiSet));
+    r.settle=addBusinessDays(r.txnLast,total,src);
+    if(M==='wealth')r.invest=addBusinessDays(r.settle,1,thaiSet);
   }else{
-    // สับเปลี่ยน = เข้าบัญชีหลักประกันเสมอ (FIXEDSP เลือก ลดเงินทั้งหมด ได้)
-    const total=SETTINGS.models[S.model]+txnAdj(r.txnType)+A.collateral;
-    r.total=total;
-    if(M==='wealth'){
-      r.ic=shiftToBusinessDay(input,thaiSet);
-      r.shifted=toDateStr(r.ic)!==toDateStr(input);
-      r.txn=addBusinessDays(r.ic,cutoffDays,src);
-      r.settle=addBusinessDays(r.txn,total,src);
-      r.invest=addBusinessDays(r.settle,1,thaiSet);
-    }else{
+    if(M==='reverse'){r.settle=input;}
+    else{
       r.invest=shiftToBusinessDay(input,thaiSet);
       r.shifted=toDateStr(r.invest)!==toDateStr(input);
       r.settle=subtractBusinessDays(r.invest,1,thaiSet);
-      r.txn=subtractBusinessDays(r.settle,total,src);
-      r.ic=latestIC(r.txn,A.before,src,thaiSet);
-      r.icAfter=latestIC(r.txn,A.after,src,thaiSet);
     }
+    r.ic=latestIC(r.settle,A.before,total,src,thaiSet);
+    r.icAfter=latestIC(r.settle,A.after,total,src,thaiSet);
+    setTxn(txnFrom(r.ic,A.before,src,thaiSet));
+  }
+  if(sw){
     const ds=toDateStr(r.invest);
     if(!thaiSet.has(ds)&&(SETTINGS.modelHolidays[S.dest]||[]).includes(ds))
       r.intlFunds=(SETTINGS.holidayFunds[S.dest]||{})[ds]||[];
@@ -642,7 +650,8 @@ function stepList(r){
   const steps=[];
   steps.push({n:1,what:'ส่ง IC Request',when:fmtMid(r.ic),
     sub:r.icAfter?`ก่อน 15:00<br>หรือ ${fmtMid(r.icAfter)} หลัง 15:00`:`${S.cutoff==='before'?'ก่อน':'หลัง'} 15:00`});
-  steps.push({n:2,what:`Transaction Date${sw?` (${src})`:''}`,when:fmtMid(r.txn)});
+  steps.push({n:2,what:`Transaction Date${sw?` (${src})`:''}`,when:fmtMid(r.txn),
+    note:r.txnFunds?`<b>มี ${r.txnFunds.length||'บาง'} กองทุนติดวันหยุด<i class="info" data-tip="กองทุนในโมเดล ${src} ที่ติดวันหยุด ${fmtShort(r.txn)}|${r.txnFunds.join(', ')}|plain">i</i></b>ระบบจะทำรายการกองทุนที่ไม่ติดวันหยุดก่อน ส่วนกองทุนที่ติดวันหยุดจะทำรายการวันทำการถัดไป (${fmtMid(r.txnLast)})`:''});
   if(!sw){
     steps.push({n:3,what:'Settlement Date (เงินเข้าบัญชี)',when:fmtMid(r.settle),sub:`เข้า${S.acct==='collateral'?'หลักประกัน (-2)':' ATS'}`});
   }else{
@@ -701,7 +710,6 @@ function calendarHtml(r){
     else if(intl.has(ds)){c+=' intl';tip=`วันหยุดกองทุนในโมเดล ${dn(S.model)}|${(fm[ds]||[]).join(', ')}`;}
     const n=marks[ds];
     if(n){c+=` mk st${n}`;st=` data-step="${n}"`;badge='';}
-    else if(ds===boldDay)c+=' bold';
     h+=`<div class="${c}"${st}${tip?` data-tip="${tip}"`:''}>${showMo?`<span class="mo">${TH_MO[d.getMonth()]}</span>`:''}${d.getDate()}${badge}</div>`;
   }
   return h+'</div></div></div>';
