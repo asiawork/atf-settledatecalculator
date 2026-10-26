@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-15",
+ "updated": "2026-10-26",
  "source": "portfolioweight.xlsx",
  "coverStart": "2026-10-01",
  "coverEnd": "2026-12-31",
@@ -74,66 +74,34 @@
   {
    "code": "CAA",
    "name": "CAA",
-   "tn": 5,
-   "nFunds": 14,
+   "tn": 4,
+   "nFunds": 12,
    "holidays": {
-    "2026-10-01": [
-     "UOBSGC"
-    ],
-    "2026-10-02": [
-     "UOBSGC"
-    ],
-    "2026-10-03": [
-     "UOBSGC"
-    ],
-    "2026-10-04": [
-     "UOBSGC"
-    ],
-    "2026-10-05": [
-     "UOBSGC"
-    ],
-    "2026-10-06": [
-     "UOBSGC"
-    ],
-    "2026-10-07": [
-     "UOBSGC"
-    ],
     "2026-10-12": [
      "BCAP-USL",
      "K-SEMQ",
      "ES-US500",
      "BCAP-USND100",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-13": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-16": [
      "BCAP-USL",
      "BCAP-USND100",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
-    ],
-    "2026-10-19": [
-     "UOBSGC"
+     "SCBGOLD"
     ],
     "2026-10-23": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
-    ],
-    "2026-11-08": [
-     "UOBSGC"
+     "SCBGOLD"
     ],
     "2026-11-09": [
-     "UOBSGC",
      "SCBGOLD"
     ],
     "2026-11-11": [
@@ -142,8 +110,7 @@
      "ES-US500",
      "BCAP-USND100",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-25": [
      "BCAP-USL",
@@ -155,8 +122,7 @@
      "ES-US500",
      "BCAP-USND100",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-27": [
      "BCAP-USL",
@@ -165,14 +131,12 @@
     "2026-12-07": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-10": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-23": [
      "BCAP-USL",
@@ -181,7 +145,6 @@
     "2026-12-24": [
      "BCAP-USL",
      "BCAP-USND100",
-     "UOBSGC",
      "SCBGOLD"
     ],
     "2026-12-25": [
@@ -189,10 +152,8 @@
      "K-SEMQ",
      "ES-US500",
      "BCAP-USND100",
-     "UOBSGC",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-30": [
      "BCAP-USL"
@@ -200,10 +161,8 @@
     "2026-12-31": [
      "BCAP-USL",
      "ES-US500",
-     "UOBSGC",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ]
    }
   },
@@ -242,21 +201,18 @@
      "K-USXNDQ-A(A)",
      "K-JPX-A(A)",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-13": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-16": [
      "BCAP-USL",
      "BCAP-USND100",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-19": [
      "UOBSGC"
@@ -264,8 +220,7 @@
     "2026-10-23": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-03": [
      "K-JPX-A(A)"
@@ -285,8 +240,7 @@
      "K-USXNDQ-A(A)",
      "K-JPX-A(A)",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-23": [
      "K-JPX-A(A)"
@@ -303,8 +257,7 @@
      "K-USXNDQ-A(A)",
      "K-JPX-A(A)",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-27": [
      "BCAP-USL",
@@ -313,14 +266,12 @@
     "2026-12-07": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-10": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-23": [
      "BCAP-USL",
@@ -341,8 +292,7 @@
      "K-JPX-A(A)",
      "UOBSGC",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-30": [
      "BCAP-USL"
@@ -352,8 +302,7 @@
      "ES-US500",
      "UOBSGC",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ]
    }
   },
@@ -392,21 +341,18 @@
      "K-USXNDQ-A(A)",
      "K-JPX-A(A)",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-13": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-16": [
      "BCAP-USL",
      "BCAP-USND100",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-10-19": [
      "UOBSGC"
@@ -414,8 +360,7 @@
     "2026-10-23": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-03": [
      "K-JPX-A(A)"
@@ -435,8 +380,7 @@
      "K-USXNDQ-A(A)",
      "K-JPX-A(A)",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-23": [
      "K-JPX-A(A)"
@@ -453,8 +397,7 @@
      "K-USXNDQ-A(A)",
      "K-JPX-A(A)",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-11-27": [
      "BCAP-USL",
@@ -463,14 +406,12 @@
     "2026-12-07": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-10": [
      "ES-US500",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-23": [
      "BCAP-USL",
@@ -491,8 +432,7 @@
      "K-JPX-A(A)",
      "UOBSGC",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ],
     "2026-12-30": [
      "BCAP-USL"
@@ -502,8 +442,7 @@
      "ES-US500",
      "UOBSGC",
      "SCBKEQTG",
-     "SCBGOLD",
-     "MSILVER"
+     "SCBGOLD"
     ]
    }
   },
@@ -524,23 +463,20 @@
      "SCBNK225D",
      "K-CHINA-A(D)",
      "SCBKEQTG",
-     "K-GOLD-A(D)",
-     "MSILVER"
+     "K-GOLD-A(D)"
     ],
     "2026-10-13": [
      "LHEME-D",
      "SCBS&P500",
      "SCBNK225D",
-     "SCBKEQTG",
-     "MSILVER"
+     "SCBKEQTG"
     ],
     "2026-10-16": [
      "BCAP-USL",
      "LHEME-D",
      "SCBS&P500",
      "SCBNK225D",
-     "SCBKEQTG",
-     "MSILVER"
+     "SCBKEQTG"
     ],
     "2026-10-19": [
      "K-CHINA-A(D)"
@@ -549,8 +485,7 @@
      "LHEME-D",
      "SCBS&P500",
      "SCBNK225D",
-     "SCBKEQTG",
-     "MSILVER"
+     "SCBKEQTG"
     ],
     "2026-11-03": [
      "SCBNK225D"
@@ -565,8 +500,7 @@
      "K-USXNDQ-A(D)",
      "K-CHINA-A(D)",
      "SCBKEQTG",
-     "K-GOLD-A(D)",
-     "MSILVER"
+     "K-GOLD-A(D)"
     ],
     "2026-11-23": [
      "SCBNK225D"
@@ -581,8 +515,7 @@
      "K-USXNDQ-A(D)",
      "K-CHINA-A(D)",
      "SCBKEQTG",
-     "K-GOLD-A(D)",
-     "MSILVER"
+     "K-GOLD-A(D)"
     ],
     "2026-11-27": [
      "BCAP-USL",
@@ -592,15 +525,13 @@
      "LHEME-D",
      "SCBS&P500",
      "SCBNK225D",
-     "SCBKEQTG",
-     "MSILVER"
+     "SCBKEQTG"
     ],
     "2026-12-10": [
      "LHEME-D",
      "SCBS&P500",
      "SCBNK225D",
-     "SCBKEQTG",
-     "MSILVER"
+     "SCBKEQTG"
     ],
     "2026-12-23": [
      "BCAP-USL"
@@ -617,8 +548,7 @@
      "K-USXNDQ-A(D)",
      "K-CHINA-A(D)",
      "SCBKEQTG",
-     "K-GOLD-A(D)",
-     "MSILVER"
+     "K-GOLD-A(D)"
     ],
     "2026-12-30": [
      "BCAP-USL"
@@ -628,8 +558,7 @@
      "LHEME-D",
      "SCBS&P500",
      "SCBNK225D",
-     "SCBKEQTG",
-     "MSILVER"
+     "SCBKEQTG"
     ]
    }
   },
@@ -637,7 +566,7 @@
    "code": "TCT",
    "name": "TCT",
    "tn": 5,
-   "nFunds": 15,
+   "nFunds": 16,
    "holidays": {
     "2026-10-01": [
      "UOBSGC"
